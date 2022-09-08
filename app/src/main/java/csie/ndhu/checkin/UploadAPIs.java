@@ -10,7 +10,7 @@ import retrofit2.http.Part;
 public interface UploadAPIs {
 
     @Multipart
-    @POST("/upload/")
+    @POST("/poi/")
     Call<ResponseBody> uploadImage(@Part MultipartBody.Part file,
                                    @Part("longitude") Double longitude,
                                    @Part("latitude") Double latitude,

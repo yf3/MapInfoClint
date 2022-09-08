@@ -1,7 +1,5 @@
 package csie.ndhu.checkin;
 
-import android.content.Context;
-
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -9,7 +7,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class NetworkClient {
 
-    private static String BASE_URL = "http://" + R.string.local_address + ":" + R.string.local_port;
+    private static final String BASE_URL = "http://" + Configs.LOCAL_ADDRESS + ":" + Configs.LOCAL_PORT;
     private static Retrofit retrofit;
 
     public static Retrofit getRetrofitClient() {
