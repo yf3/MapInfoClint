@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void runWebSocket() {
-        Request request = new Request.Builder().url("ws://134.208.3.16:8080/ws/chat/").build();
+        Request request = new Request.Builder().url(getString(R.string.websocket_url)).build();
         MessageWebSocketListener listener = new MessageWebSocketListener();
         WebSocket webSocket = client.newWebSocket(request, listener);
     }

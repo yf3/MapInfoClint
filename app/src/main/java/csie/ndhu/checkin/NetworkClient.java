@@ -9,7 +9,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class NetworkClient {
 
-    private static String BASE_URL = "http://134.208.3.16:8080";
+    private static String BASE_URL = "http://" + R.string.local_address + ":" + R.string.local_port;
     private static Retrofit retrofit;
 
     public static Retrofit getRetrofitClient() {
