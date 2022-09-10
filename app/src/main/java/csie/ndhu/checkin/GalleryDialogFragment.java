@@ -115,8 +115,8 @@ public class GalleryDialogFragment extends DialogFragment {
         UploadAPIs uploadAPIs = retrofit.create(UploadAPIs.class);
 
         File file = new File(filePath);
-        RequestBody fileReqBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), fileReqBody);
+        RequestBody imageReqBody = RequestBody.create(MediaType.parse("image/jpg"), file);
+        MultipartBody.Part part = MultipartBody.Part.createFormData("attachment", file.getName(), imageReqBody);
 
         LocationParser.LongLatPair longLatPair = getLocationFromFile(file);
 
@@ -133,15 +133,15 @@ public class GalleryDialogFragment extends DialogFragment {
                 if (response.code() == 400) {
                     try {
                         Log.i("Bad Request 400", response.errorBody().string());
-                        Log.i("Bad Request 400!", "WTF");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    textViewTest.setText("Failed!");
                 }
                 else {
                     Log.i("Response code", String.valueOf(response.code()));
+                    textViewTest.setText("Done!");
                 }
-                textViewTest.setText("Done!");
             }
 
             @Override
