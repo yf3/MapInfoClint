@@ -109,22 +109,28 @@ public class GalleryDialogFragment extends DialogFragment {
 
     }
 
+    // Use Request Body instead of String because of the Retrofit converter adding quote problem
+    private RequestBody getStringBody(String string) {
+        return RequestBody.create(MediaType.parse("text/plain"), string);
+    }
+
     private void uploadToServer(String filePath) {
         Retrofit retrofit = NetworkClient.getRetrofitClient();
         UploadAPIs uploadAPIs = retrofit.create(UploadAPIs.class);
 
         File photo = new File(filePath);
         RequestBody imageReqBody = RequestBody.create(MediaType.parse("image/*"), photo);
-        MultipartBody.Part part = MultipartBody.Part.createFormData("attachment", photo.getName(), imageReqBody);
+        MultipartBody.Part filePart = MultipartBody.Part.createFormData("attachment", photo.getName(), imageReqBody);
 
         LocationParser.LongLatPair longLatPair = getLocationFromFile(photo);
 
         Log.i("Photo Location", String.format("%f, %f", longLatPair.getLongitude(), longLatPair.getLatitude()));
 
-        Call call = uploadAPIs.uploadImage(part,
+        Call call = uploadAPIs.uploadImage(getStringBody("default"),
+                filePart,
                 longLatPair.getLongitude(),
                 longLatPair.getLatitude(),
-                textInputLayout.getEditText().getText().toString());
+                getStringBody(textInputLayout.getEditText().getText().toString()));
 
         call.enqueue(new Callback() {
             @Override
