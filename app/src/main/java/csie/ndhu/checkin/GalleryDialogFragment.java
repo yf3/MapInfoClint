@@ -111,21 +111,20 @@ public class GalleryDialogFragment extends DialogFragment {
 
     private void uploadToServer(String filePath) {
         Retrofit retrofit = NetworkClient.getRetrofitClient();
-
         UploadAPIs uploadAPIs = retrofit.create(UploadAPIs.class);
 
-        File file = new File(filePath);
-        RequestBody imageReqBody = RequestBody.create(MediaType.parse("image/jpg"), file);
-        MultipartBody.Part part = MultipartBody.Part.createFormData("attachment", file.getName(), imageReqBody);
+        File photo = new File(filePath);
+        RequestBody imageReqBody = RequestBody.create(MediaType.parse("image/*"), photo);
+        MultipartBody.Part part = MultipartBody.Part.createFormData("attachment", photo.getName(), imageReqBody);
 
-        LocationParser.LongLatPair longLatPair = getLocationFromFile(file);
+        LocationParser.LongLatPair longLatPair = getLocationFromFile(photo);
+
+        Log.i("Photo Location", String.format("%f, %f", longLatPair.getLongitude(), longLatPair.getLatitude()));
 
         Call call = uploadAPIs.uploadImage(part,
                 longLatPair.getLongitude(),
                 longLatPair.getLatitude(),
                 textInputLayout.getEditText().getText().toString());
-
-        Log.i("UploadedLocation", String.format("%f, %f", longLatPair.getLongitude(), longLatPair.getLatitude()));
 
         call.enqueue(new Callback() {
             @Override
@@ -136,11 +135,11 @@ public class GalleryDialogFragment extends DialogFragment {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    textViewTest.setText("Failed!");
+                    textViewTest.setText("Upload Failed!");
                 }
                 else {
                     Log.i("Response code", String.valueOf(response.code()));
-                    textViewTest.setText("Done!");
+                    textViewTest.setText("Upload Success!");
                 }
             }
 
