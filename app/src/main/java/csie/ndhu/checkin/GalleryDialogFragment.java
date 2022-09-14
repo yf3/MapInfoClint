@@ -11,14 +11,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
 
-import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,10 +38,9 @@ public class GalleryDialogFragment extends DialogFragment {
 
     private ImageView imageView;
     private Button buttonUpload;
-    private TextView textViewTest;
-    private CheckBox checkBox1;
-    private CheckBox checkBox2;
-    private TextInputLayout textInputLayout;
+    private TextView textViewResult;
+    private TextInputEditText titleEditText;
+    private TextInputEditText commentEditText;
 
     private OnFragmentInteractionListener mListener;
 
@@ -73,22 +73,24 @@ public class GalleryDialogFragment extends DialogFragment {
 
         imageView = view.findViewById(R.id.imageViewTemp);
         imageView.setImageDrawable(Drawable.createFromPath(photoPath));
-        textViewTest = view.findViewById(R.id.textView2);
-        textViewTest.setText("");
+        textViewResult = view.findViewById(R.id.text_result);
+        textViewResult.setText("");
+        titleEditText = view.findViewById(R.id.title_text);
+        commentEditText = view.findViewById(R.id.photo_comment_text);
 
         buttonUpload = view.findViewById(R.id.button_upload);
         buttonUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                textViewTest.setText("uploading");
+                textViewResult.setText("uploading");
                 uploadToServer(photoPath);
             }
         });
 
-        checkBox1 = view.findViewById(R.id.checkBox1);
-        checkBox2 = view.findViewById(R.id.checkBox2);
-
-        textInputLayout = view.findViewById(R.id.photo_comment);
+        Spinner poiTypeSpinner = view.findViewById(R.id.poitype_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
+                R.array.poi_types, android.R.layout.simple_spinner_item); // dropdown layout?
+        poiTypeSpinner.setAdapter(adapter);
 
         AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
@@ -126,11 +128,11 @@ public class GalleryDialogFragment extends DialogFragment {
 
         Log.i("Photo Location", String.format("%f, %f", longLatPair.getLongitude(), longLatPair.getLatitude()));
 
-        Call call = uploadAPIs.uploadImage(getStringBody("default"),
+        Call call = uploadAPIs.uploadImage(getStringBody(titleEditText.getText().toString()),
                 filePart,
                 longLatPair.getLongitude(),
                 longLatPair.getLatitude(),
-                getStringBody(textInputLayout.getEditText().getText().toString()));
+                getStringBody(commentEditText.getText().toString()));
 
         call.enqueue(new Callback() {
             @Override
@@ -141,11 +143,11 @@ public class GalleryDialogFragment extends DialogFragment {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    textViewTest.setText("Upload Failed!");
+                    textViewResult.setText("Upload Failed!");
                 }
                 else {
                     Log.i("Response code", String.valueOf(response.code()));
-                    textViewTest.setText("Upload Success!");
+                    textViewResult.setText("Upload Success!");
                 }
             }
 
