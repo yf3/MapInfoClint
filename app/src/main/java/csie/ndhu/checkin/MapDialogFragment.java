@@ -45,8 +45,6 @@ public class MapDialogFragment extends DialogFragment {
     private MapView mapView;
 
     private Button buttonSavePhoto;
-    private CheckBox checkBox1;
-    private CheckBox checkBox2;
 
     public MapDialogFragment() {
         // Required empty public constructor

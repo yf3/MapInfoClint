@@ -1,16 +1,12 @@
 package csie.ndhu.checkin;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -25,7 +21,6 @@ import java.util.List;
 
 public class LocationManager {
 
-    public static final int CAMERA_REQUEST_CODE = 1;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Location lastLocation;
     private LocationCallback locationCallback;
@@ -36,23 +31,6 @@ public class LocationManager {
     }
 
     public void initialize(AppCompatActivity activity) {
-//        Context context = activity.getApplicationContext();
-//        if (ActivityCompat.checkSelfPermission(context,
-//                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-//                ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
-//                    Manifest.permission.READ_CONTACTS)) {
-//                // Show an explanation to the user *asynchronously* -- don't block
-//                // this thread waiting for the user's response! After the user
-//                // sees the explanation, try again to request the permission.
-//            } else {
-//                // No explanation needed; request the permission
-//                ActivityCompat.requestPermissions(activity,
-//                        new String[]{Manifest.permission.READ_CONTACTS},
-//                        CAMERA_REQUEST_CODE);
-//            }
-//            return;
-//        }
         locationListeners = new ArrayList<>();
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity);
     }

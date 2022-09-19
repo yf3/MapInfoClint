@@ -34,25 +34,19 @@ public class CameraActivity extends AppCompatActivity implements LocationListene
     private Button captureButton;
 
     private LocationManager locationManager;
-    final String[] LOCATION_PERMISSIONS = {
+    final String[] PERMISSIONS = {
+            Manifest.permission.CAMERA,
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkPermissions();
         setContentView(R.layout.activity_camera_preview);
-
-        mCamera = getCameraInstance();
-
-        mPreview = new CameraPreview(this, mCamera);
-        FrameLayout preview = findViewById(R.id.camera_preview);
-        preview.addView(mPreview);
 
         captureButton = findViewById(R.id.button_capture);
         captureButton.setOnClickListener(captureListener);
-
-        checkPermissions();
 
         locationManager = new LocationManager();
         locationManager.initialize(CameraActivity.this);
@@ -61,7 +55,7 @@ public class CameraActivity extends AppCompatActivity implements LocationListene
 
     private void checkPermissions() {
         Context context = this.getApplicationContext();
-        for (String PERMISSION: LOCATION_PERMISSIONS) {
+        for (String PERMISSION: PERMISSIONS) {
             if (ContextCompat.checkSelfPermission(context, PERMISSION) != PackageManager.PERMISSION_GRANTED) {
                 break;
             }
@@ -69,9 +63,15 @@ public class CameraActivity extends AppCompatActivity implements LocationListene
         ActivityResultLauncher<String[]> requestPermissionLauncher =
                 registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), isGranted
                         -> {
-                    // TODO: If not granted location permission
+                    if (isGranted.get(Manifest.permission.CAMERA)) {
+                        mCamera = getCameraInstance();
+
+                        mPreview = new CameraPreview(this, mCamera);
+                        FrameLayout preview = findViewById(R.id.camera_preview);
+                        preview.addView(mPreview);
+                    }
                 });
-        requestPermissionLauncher.launch(LOCATION_PERMISSIONS);
+        requestPermissionLauncher.launch(PERMISSIONS);
     }
 
     private boolean checkCameraHardware(Context context) {
