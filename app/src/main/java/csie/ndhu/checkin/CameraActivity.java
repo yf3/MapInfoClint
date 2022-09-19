@@ -1,12 +1,18 @@
 package csie.ndhu.checkin;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +34,9 @@ public class CameraActivity extends AppCompatActivity implements LocationListene
     private Button captureButton;
 
     private LocationManager locationManager;
+    final String[] LOCATION_PERMISSIONS = {
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,7 +52,26 @@ public class CameraActivity extends AppCompatActivity implements LocationListene
         captureButton = findViewById(R.id.button_capture);
         captureButton.setOnClickListener(captureListener);
 
+        checkPermissions();
+
         locationManager = new LocationManager();
+        locationManager.initialize(CameraActivity.this);
+        locationManager.registerListener(CameraActivity.this);
+    }
+
+    private void checkPermissions() {
+        Context context = this.getApplicationContext();
+        for (String PERMISSION: LOCATION_PERMISSIONS) {
+            if (ContextCompat.checkSelfPermission(context, PERMISSION) != PackageManager.PERMISSION_GRANTED) {
+                break;
+            }
+        }
+        ActivityResultLauncher<String[]> requestPermissionLauncher =
+                registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), isGranted
+                        -> {
+                    // TODO: If not granted location permission
+                });
+        requestPermissionLauncher.launch(LOCATION_PERMISSIONS);
     }
 
     private boolean checkCameraHardware(Context context) {
@@ -134,8 +162,8 @@ public class CameraActivity extends AppCompatActivity implements LocationListene
     private View.OnClickListener captureListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            locationManager.initialize(CameraActivity.this);
-            locationManager.registerListener(CameraActivity.this);
+//            locationManager.initialize(CameraActivity.this);
+//            locationManager.registerListener(CameraActivity.this);
             locationManager.updateAndNotify();
         }
     };

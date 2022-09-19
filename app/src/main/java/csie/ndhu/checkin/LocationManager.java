@@ -36,23 +36,23 @@ public class LocationManager {
     }
 
     public void initialize(AppCompatActivity activity) {
-        Context context = activity.getApplicationContext();
-        if (ActivityCompat.checkSelfPermission(context,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
-                    Manifest.permission.READ_CONTACTS)) {
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-            } else {
-                // No explanation needed; request the permission
-                ActivityCompat.requestPermissions(activity,
-                        new String[]{Manifest.permission.READ_CONTACTS},
-                        CAMERA_REQUEST_CODE);
-            }
-            return;
-        }
+//        Context context = activity.getApplicationContext();
+//        if (ActivityCompat.checkSelfPermission(context,
+//                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+//                ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
+//                    Manifest.permission.READ_CONTACTS)) {
+//                // Show an explanation to the user *asynchronously* -- don't block
+//                // this thread waiting for the user's response! After the user
+//                // sees the explanation, try again to request the permission.
+//            } else {
+//                // No explanation needed; request the permission
+//                ActivityCompat.requestPermissions(activity,
+//                        new String[]{Manifest.permission.READ_CONTACTS},
+//                        CAMERA_REQUEST_CODE);
+//            }
+//            return;
+//        }
         locationListeners = new ArrayList<>();
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity);
     }
