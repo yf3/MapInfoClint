@@ -1,4 +1,4 @@
-package csie.ndhu.checkin;
+package csie.ndhu.mapInfo;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;

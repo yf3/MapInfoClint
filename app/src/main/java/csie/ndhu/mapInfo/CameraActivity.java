@@ -1,4 +1,4 @@
-package csie.ndhu.checkin;
+package csie.ndhu.mapInfo;
 
 import android.Manifest;
 import android.content.Context;
@@ -11,7 +11,6 @@ import android.os.Environment;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -42,57 +41,61 @@ public class CameraActivity extends AppCompatActivity implements LocationListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        checkPermissions();
         setContentView(R.layout.activity_camera_preview);
 
         captureButton = findViewById(R.id.button_capture);
         captureButton.setOnClickListener(captureListener);
 
+        checkPermissions();
+    }
+
+    private void activateCameraFeature() {
+        mCamera = getCameraInstance();
+
+        mPreview = new CameraPreview(this, mCamera);
+        FrameLayout preview = findViewById(R.id.camera_preview);
+        preview.addView(mPreview);
+    }
+
+    private void activateLocationFeature() {
         locationManager = new LocationManager();
         locationManager.initialize(CameraActivity.this);
         locationManager.registerListener(CameraActivity.this);
     }
 
     private void checkPermissions() {
-        Context context = this.getApplicationContext();
-        for (String PERMISSION: PERMISSIONS) {
-            if (ContextCompat.checkSelfPermission(context, PERMISSION) != PackageManager.PERMISSION_GRANTED) {
-                break;
-            }
-        }
+//        Context context = this.getApplicationContext();
+//        for (String PERMISSION: PERMISSIONS) {
+//            if (ContextCompat.checkSelfPermission(context, PERMISSION) != PackageManager.PERMISSION_GRANTED) {
+//            }
+//        }
         ActivityResultLauncher<String[]> requestPermissionLauncher =
                 registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), isGranted
                         -> {
                     if (isGranted.get(Manifest.permission.CAMERA)) {
-                        mCamera = getCameraInstance();
-
-                        mPreview = new CameraPreview(this, mCamera);
-                        FrameLayout preview = findViewById(R.id.camera_preview);
-                        preview.addView(mPreview);
+                        activateCameraFeature();
+                    }
+                    if (isGranted.get(Manifest.permission.ACCESS_FINE_LOCATION) &&
+                        isGranted.get(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                        activateLocationFeature();
                     }
                 });
         requestPermissionLauncher.launch(PERMISSIONS);
     }
 
     private boolean checkCameraHardware(Context context) {
-        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
-            // this device has a camera
-            return true;
-        } else {
-            // no camera on this device
-            return false;
-        }
+        return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
     }
 
     public static Camera getCameraInstance(){
         Camera c = null;
         try {
-            c = Camera.open(); // attempt to get a Camera instance
+            c = Camera.open();
         }
         catch (Exception e){
             // Camera is not available (in use or does not exist)
         }
-        return c; // returns null if camera is unavailable
+        return c;
     }
 
     private Camera.PictureCallback mPicture = new Camera.PictureCallback() {
@@ -162,8 +165,6 @@ public class CameraActivity extends AppCompatActivity implements LocationListene
     private View.OnClickListener captureListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-//            locationManager.initialize(CameraActivity.this);
-//            locationManager.registerListener(CameraActivity.this);
             locationManager.updateAndNotify();
         }
     };

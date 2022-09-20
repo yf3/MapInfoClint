@@ -1,4 +1,4 @@
-package csie.ndhu.checkin;
+package csie.ndhu.mapInfo;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,10 +22,10 @@ public class MainActivity extends AppCompatActivity {
 
                     return true;
                 case R.id.navigation_camera:
-                    openActivity("csie.ndhu.checkin.CameraActivity");
+                    openActivity("csie.ndhu.mapInfo.CameraActivity");
                     return true;
                 case R.id.navigation_gallery:
-                    openActivity("csie.ndhu.checkin.Gallery");
+                    openActivity("csie.ndhu.mapInfo.Gallery");
                     return true;
             }
             return false;

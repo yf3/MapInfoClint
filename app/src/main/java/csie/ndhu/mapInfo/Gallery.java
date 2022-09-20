@@ -1,4 +1,4 @@
-package csie.ndhu.checkin;
+package csie.ndhu.mapInfo;
 
 import android.os.Build;
 import android.os.Environment;

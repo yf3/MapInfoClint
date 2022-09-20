@@ -1,4 +1,4 @@
-package csie.ndhu.checkin;
+package csie.ndhu.mapInfo;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -77,6 +77,7 @@ public class GalleryDialogFragment extends DialogFragment {
         textViewResult.setText("");
         titleEditText = view.findViewById(R.id.title_text);
         commentEditText = view.findViewById(R.id.photo_comment_text);
+        // TODO: check photo location
 
         buttonUpload = view.findViewById(R.id.button_upload);
         buttonUpload.setOnClickListener(new View.OnClickListener() {
