@@ -51,15 +51,13 @@ public class CameraActivity extends AppCompatActivity implements LocationListene
 
     private void activateCameraFeature() {
         mCamera = getCameraInstance();
-
         mPreview = new CameraPreview(this, mCamera);
         FrameLayout preview = findViewById(R.id.camera_preview);
         preview.addView(mPreview);
     }
 
     private void activateLocationFeature() {
-        locationManager = new LocationManager();
-        locationManager.initialize(CameraActivity.this);
+        locationManager = LocationManager.getInstance(getApplicationContext());
         locationManager.registerListener(CameraActivity.this);
     }
 

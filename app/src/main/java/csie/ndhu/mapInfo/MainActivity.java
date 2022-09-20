@@ -19,7 +19,9 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-
+                    openActivity("csie.ndhu.mapInfo.MainActivity");
+                    return true;
+                case R.id.navigation_maps:
                     return true;
                 case R.id.navigation_camera:
                     openActivity("csie.ndhu.mapInfo.CameraActivity");

@@ -1,6 +1,7 @@
 package csie.ndhu.mapInfo;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.location.Location;
 import android.os.Looper;
 import android.util.Log;
@@ -21,18 +22,27 @@ import java.util.List;
 
 public class LocationManager {
 
+    private static LocationManager instance;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Location lastLocation;
     private LocationCallback locationCallback;
     private List<LocationListener> locationListeners;
+    // TODO: better off not using this, other way to observe
 
-    public LocationManager() {
-
+    private LocationManager(Context appContext) {
+        locationListeners = new ArrayList<>();
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(appContext);
     }
 
-    public void initialize(AppCompatActivity activity) {
-        locationListeners = new ArrayList<>();
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity);
+    public static LocationManager getInstance(Context appContext) {
+        if (null == instance) {
+            synchronized (LocationManager.class) {
+                if (null == instance) {
+                    instance = new LocationManager(appContext);
+                }
+            }
+        }
+        return instance;
     }
 
     public void registerListener(LocationListener locationListener) {
@@ -72,7 +82,7 @@ public class LocationManager {
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 lastLocation = locationResult.getLastLocation();
-                Log.i("LocationCallback", String.format("%f, %f", locationResult.getLastLocation().getLongitude(), locationResult.getLastLocation().getLatitude()));
+                Log.i("LocationCallback", String.format("%f, %f", lastLocation.getLongitude(), lastLocation.getLatitude()));
                 for (LocationListener locationListener: locationListeners) {
                     locationListener.onLocationFound();
                 }
