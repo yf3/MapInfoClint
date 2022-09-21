@@ -11,6 +11,7 @@ import android.os.Environment;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -46,7 +47,7 @@ public class CameraActivity extends AppCompatActivity implements LocationListene
         captureButton = findViewById(R.id.button_capture);
         captureButton.setOnClickListener(captureListener);
 
-        checkPermissions();
+        requestPermissions();
     }
 
     private void activateCameraFeature() {
@@ -61,12 +62,17 @@ public class CameraActivity extends AppCompatActivity implements LocationListene
         locationManager.registerListener(CameraActivity.this);
     }
 
-    private void checkPermissions() {
-//        Context context = this.getApplicationContext();
-//        for (String PERMISSION: PERMISSIONS) {
-//            if (ContextCompat.checkSelfPermission(context, PERMISSION) != PackageManager.PERMISSION_GRANTED) {
-//            }
-//        }
+    private boolean checkPermissions() {
+        Context context = this.getApplicationContext();
+        for (String PERMISSION: PERMISSIONS) {
+            if (ContextCompat.checkSelfPermission(context, PERMISSION) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void requestPermissions() {
         ActivityResultLauncher<String[]> requestPermissionLauncher =
                 registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), isGranted
                         -> {
@@ -163,7 +169,9 @@ public class CameraActivity extends AppCompatActivity implements LocationListene
     private View.OnClickListener captureListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            locationManager.updateAndNotify();
+            Log.i("Camera", "Capture clicked.");
+//            locationManager.updateAndNotify();
+            locationManager.findCurrentLocation();
         }
     };
 
