@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.location.Location;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
@@ -12,6 +13,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -27,13 +30,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class CameraActivity extends AppCompatActivity implements LocationListener, MapDialogFragment.OnFragmentInteractionListener {
+public class CameraActivity extends AppCompatActivity implements MapDialogFragment.OnFragmentInteractionListener {
 
+    private CameraViewModel viewModel;
     private Camera mCamera;
     private CameraPreview mPreview;
     private Button captureButton;
 
     private LocationManager locationManager;
+    private Location foundLocation;
     final String[] PERMISSIONS = {
             Manifest.permission.CAMERA,
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -43,6 +48,8 @@ public class CameraActivity extends AppCompatActivity implements LocationListene
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_preview);
+
+        viewModel = new ViewModelProvider(this).get(CameraViewModel.class);
 
         captureButton = findViewById(R.id.button_capture);
         captureButton.setOnClickListener(captureListener);
@@ -57,12 +64,29 @@ public class CameraActivity extends AppCompatActivity implements LocationListene
         preview.addView(mPreview);
     }
 
-    private void activateLocationFeature() {
-        locationManager = LocationManager.getInstance(getApplicationContext());
-        locationManager.registerListener(CameraActivity.this);
+    private void activatePhotoLocationFeature() {
+        viewModel.setupLocationRepo();
+        final Observer<Location> locationObserver = location -> {
+            foundLocation = location;
+            onPhotoLocationFound(location.getLatitude(), location.getLongitude());
+        };
+        viewModel.getInstantLocation().observe(this, locationObserver);
     }
 
-    private boolean checkPermissions() {
+    private View.OnClickListener captureListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Log.i("Camera", "Capture clicked.");
+            viewModel.findCurrentLocation();
+        }
+    };
+
+    public void onPhotoLocationFound(double latitude, double longitude) {
+        MapDialogFragment dialogFragment = MapDialogFragment.newInstance(latitude, longitude);
+        dialogFragment.show(getSupportFragmentManager(), "map");
+    }
+
+    private boolean hasPermissions() {
         Context context = this.getApplicationContext();
         for (String PERMISSION: PERMISSIONS) {
             if (ContextCompat.checkSelfPermission(context, PERMISSION) != PackageManager.PERMISSION_GRANTED) {
@@ -81,7 +105,7 @@ public class CameraActivity extends AppCompatActivity implements LocationListene
                     }
                     if (isGranted.get(Manifest.permission.ACCESS_FINE_LOCATION) &&
                         isGranted.get(Manifest.permission.ACCESS_COARSE_LOCATION)) {
-                        activateLocationFeature();
+                        activatePhotoLocationFeature();
                     }
                 });
         requestPermissionLauncher.launch(PERMISSIONS);
@@ -153,7 +177,7 @@ public class CameraActivity extends AppCompatActivity implements LocationListene
                 fos.write(data);
 
                 exifInterface = new ExifInterface(pictureFile.getAbsolutePath());
-                exifInterface.setAttribute(ExifInterface.TAG_IMAGE_DESCRIPTION, "Longitude:" + locationManager.getLongitude() + " " + "Latitude:" + locationManager.getLatitude());
+                exifInterface.setAttribute(ExifInterface.TAG_IMAGE_DESCRIPTION, "Longitude:" + foundLocation.getLongitude() + " " + "Latitude:" + foundLocation.getLatitude());
                 exifInterface.saveAttributes();
                 Log.i("exif", "" + exifInterface.getAttribute(ExifInterface.TAG_IMAGE_DESCRIPTION));
                 fos.close();
@@ -165,21 +189,6 @@ public class CameraActivity extends AppCompatActivity implements LocationListene
             mCamera.startPreview();
         }
     };
-
-    private View.OnClickListener captureListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Log.i("Camera", "Capture clicked.");
-//            locationManager.updateAndNotify();
-            locationManager.findCurrentLocation();
-        }
-    };
-
-    @Override
-    public void onLocationFound() {
-        MapDialogFragment dialogFragment = MapDialogFragment.newInstance(locationManager.getLatitude(), locationManager.getLongitude());
-        dialogFragment.show(getSupportFragmentManager(), "map");
-    }
 
     @Override
     protected void onPause() {

@@ -20,7 +20,7 @@ public class LocationManager {
 
     private static LocationManager instance;
     private FusedLocationProviderClient fusedLocationProviderClient;
-    private Location lastLocation;
+    private Location currentLocation;
     private LocationCallback locationCallback;
     private LocationListener instantLocationListener;
 
@@ -50,9 +50,9 @@ public class LocationManager {
         fusedLocationProviderClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, cancellationToken).addOnSuccessListener(
                 location -> {
                     if (location != null) {
-                        lastLocation = location;
+                        currentLocation = location;
                         Log.i("Location", "Location is found.");
-                        Log.i("Location", String.format("%f, %f", lastLocation.getLongitude(), lastLocation.getLatitude()));
+                        Log.i("Location", String.format("%f, %f", currentLocation.getLongitude(), currentLocation.getLatitude()));
                         instantLocationListener.onLocationFound();
                     }
                     else {
@@ -74,17 +74,21 @@ public class LocationManager {
         locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
-                lastLocation = locationResult.getLastLocation();
-                Log.i("LocationCallback", String.format("%f, %f", lastLocation.getLongitude(), lastLocation.getLatitude()));
+                currentLocation = locationResult.getLastLocation();
+                Log.i("LocationCallback", String.format("%f, %f", currentLocation.getLongitude(), currentLocation.getLatitude()));
             }
         };
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
     }
 
+    public Location getCurrentLocation() {
+        return currentLocation;
+    }
+
     public double getLongitude()
     {
-        if (lastLocation != null) {
-            return lastLocation.getLongitude();
+        if (currentLocation != null) {
+            return currentLocation.getLongitude();
         }
         else {
             return 121.4;
@@ -92,8 +96,8 @@ public class LocationManager {
     }
 
     public double getLatitude() {
-        if (lastLocation != null) {
-            return lastLocation.getLatitude();
+        if (currentLocation != null) {
+            return currentLocation.getLatitude();
         }
         else {
             return 23.9;
