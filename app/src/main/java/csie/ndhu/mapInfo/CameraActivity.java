@@ -12,6 +12,10 @@ import android.os.Environment;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.camera.core.CameraSelector;
+import androidx.camera.core.Preview;
+import androidx.camera.lifecycle.ProcessCameraProvider;
+import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -22,12 +26,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import com.google.common.util.concurrent.ListenableFuture;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 
 public class CameraActivity extends AppCompatActivity implements MapDialogFragment.OnFragmentInteractionListener {
@@ -36,6 +43,8 @@ public class CameraActivity extends AppCompatActivity implements MapDialogFragme
     private Camera mCamera;
     private CameraPreview mPreview;
     private Button captureButton;
+
+    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
 
     private Location foundLocation;
     final String[] PERMISSIONS = {
@@ -56,11 +65,36 @@ public class CameraActivity extends AppCompatActivity implements MapDialogFragme
         requestPermissions();
     }
 
-    private void activateCameraFeature() {
-        mCamera = getCameraInstance();
-        mPreview = new CameraPreview(this, mCamera);
-        FrameLayout preview = findViewById(R.id.camera_preview);
-        preview.addView(mPreview);
+//    private void activateCameraFeature() {
+//        mCamera = getCameraInstance();
+//        mPreview = new CameraPreview(this, mCamera);
+//        FrameLayout preview = findViewById(R.id.camera_preview);
+//        preview.addView(mPreview);
+//    }
+
+    private void startCamera() {
+        cameraProviderFuture = ProcessCameraProvider.getInstance(this);
+        cameraProviderFuture.addListener(()-> {
+            try {
+                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+                bindPreview(cameraProvider);
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }, ContextCompat.getMainExecutor(this));
+    }
+
+    private void bindPreview(ProcessCameraProvider cameraProvider) {
+        Preview preview = new Preview.Builder().build();
+        PreviewView previewView = findViewById(R.id.camera_preview_view);
+        CameraSelector cameraSelector = new CameraSelector.Builder()
+                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                .build();
+        preview.setSurfaceProvider(previewView.getSurfaceProvider());
+        androidx.camera.core.Camera camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview);
     }
 
     private void activatePhotoLocationFeature() {
@@ -100,7 +134,7 @@ public class CameraActivity extends AppCompatActivity implements MapDialogFragme
                 registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), isGranted
                         -> {
                     if (isGranted.get(Manifest.permission.CAMERA)) {
-                        activateCameraFeature();
+                        startCamera();
                     }
                     if (isGranted.get(Manifest.permission.ACCESS_FINE_LOCATION) &&
                         isGranted.get(Manifest.permission.ACCESS_COARSE_LOCATION)) {
