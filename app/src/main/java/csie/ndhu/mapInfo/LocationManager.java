@@ -84,23 +84,4 @@ public class LocationManager {
     public Location getCurrentLocation() {
         return currentLocation;
     }
-
-    public double getLongitude()
-    {
-        if (currentLocation != null) {
-            return currentLocation.getLongitude();
-        }
-        else {
-            return 121.4;
-        }
-    }
-
-    public double getLatitude() {
-        if (currentLocation != null) {
-            return currentLocation.getLatitude();
-        }
-        else {
-            return 23.9;
-        }
-    }
 }

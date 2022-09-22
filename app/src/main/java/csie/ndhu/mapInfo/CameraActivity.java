@@ -37,7 +37,6 @@ public class CameraActivity extends AppCompatActivity implements MapDialogFragme
     private CameraPreview mPreview;
     private Button captureButton;
 
-    private LocationManager locationManager;
     private Location foundLocation;
     final String[] PERMISSIONS = {
             Manifest.permission.CAMERA,
