@@ -11,8 +11,11 @@ import android.os.Environment;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraSelector;
+import androidx.camera.core.ImageCapture;
+import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
@@ -24,7 +27,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
@@ -35,16 +37,21 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 
 public class CameraActivity extends AppCompatActivity implements MapDialogFragment.OnFragmentInteractionListener {
 
     private CameraViewModel viewModel;
+
     private Camera mCamera;
     private CameraPreview mPreview;
-    private Button captureButton;
 
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
+    private androidx.camera.core.Camera camera;
+    private ImageCapture imageCapture;
+    private Button captureButton;
 
     private Location foundLocation;
     final String[] PERMISSIONS = {
@@ -65,36 +72,31 @@ public class CameraActivity extends AppCompatActivity implements MapDialogFragme
         requestPermissions();
     }
 
-//    private void activateCameraFeature() {
-//        mCamera = getCameraInstance();
-//        mPreview = new CameraPreview(this, mCamera);
-//        FrameLayout preview = findViewById(R.id.camera_preview);
-//        preview.addView(mPreview);
-//    }
+    private Preview getPreview() {
+        Preview preview = new Preview.Builder().build();
+        PreviewView previewView = findViewById(R.id.camera_preview_view);
+        preview.setSurfaceProvider(previewView.getSurfaceProvider());
+        return preview;
+    }
 
     private void startCamera() {
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
         cameraProviderFuture.addListener(()-> {
             try {
                 ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
-                bindPreview(cameraProvider);
+                CameraSelector cameraSelector = new CameraSelector.Builder()
+                        .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                        .build();
+                // ImageCapture case
+                imageCapture = new ImageCapture.Builder().build();
+                // TODO: Consider adjusting rotation
+                camera = cameraProvider.bindToLifecycle(this, cameraSelector, imageCapture, getPreview());
             } catch (ExecutionException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
         }, ContextCompat.getMainExecutor(this));
-    }
-
-    private void bindPreview(ProcessCameraProvider cameraProvider) {
-        Preview preview = new Preview.Builder().build();
-        PreviewView previewView = findViewById(R.id.camera_preview_view);
-        CameraSelector cameraSelector = new CameraSelector.Builder()
-                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-                .build();
-        preview.setSurfaceProvider(previewView.getSurfaceProvider());
-        androidx.camera.core.Camera camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview);
     }
 
     private void activatePhotoLocationFeature() {
@@ -110,13 +112,38 @@ public class CameraActivity extends AppCompatActivity implements MapDialogFragme
         @Override
         public void onClick(View v) {
             Log.i("Camera", "Capture clicked.");
-            viewModel.findCurrentLocation();
+            Executor takePictureExecutor = Executors.newSingleThreadExecutor();
+            imageCapture.takePicture(takePictureExecutor, new ImageCapture.OnImageCapturedCallback() {
+                @Override
+                public void onCaptureSuccess(@NonNull ImageProxy imageProxy) {
+                    super.onCaptureSuccess(imageProxy);
+                    // TODO: Consider adjusting rotation
+                    viewModel.updateCurrentLocation();
+                    // Show finding location UI
+                }
+            });
         }
     };
 
     public void onPhotoLocationFound(double latitude, double longitude) {
         MapDialogFragment dialogFragment = MapDialogFragment.newInstance(latitude, longitude);
         dialogFragment.show(getSupportFragmentManager(), "map");
+    }
+
+    private File getImageFile() {
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), "CheckIn"); // TODO: avoid hard-coded
+
+        if (! mediaStorageDir.exists()) {
+            if (! mediaStorageDir.mkdirs()) {
+                Log.d("CheckIn", "failed to create directory");
+                return null;
+            }
+        }
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+                "IMG_"+ timeStamp + ".jpg");
+        return mediaFile;
     }
 
     private boolean hasPermissions() {
@@ -146,17 +173,6 @@ public class CameraActivity extends AppCompatActivity implements MapDialogFragme
 
     private boolean checkCameraHardware(Context context) {
         return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
-    }
-
-    public static Camera getCameraInstance(){
-        Camera c = null;
-        try {
-            c = Camera.open();
-        }
-        catch (Exception e){
-            // Camera is not available (in use or does not exist)
-        }
-        return c;
     }
 
     private Camera.PictureCallback mPicture = new Camera.PictureCallback() {
@@ -243,6 +259,6 @@ public class CameraActivity extends AppCompatActivity implements MapDialogFragme
     @Override
     public void onFragmentInteraction() {
         Log.i("FragmentInteraction", "It Worked!");
-        doTakePicture();
+//        doTakePicture();
     }
 }

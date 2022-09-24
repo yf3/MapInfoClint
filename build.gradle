@@ -17,10 +17,25 @@ buildscript {
     }
 }
 
+def Properties localProperties = new Properties()
+localProperties.load(project.rootProject.file("local.properties").newDataInputStream())
+
 allprojects {
     repositories {
         google()
         jcenter()
+        maven {
+            url 'https://api.mapbox.com/downloads/v2/releases/maven'
+            authentication {
+                basic(BasicAuthentication)
+            }
+            credentials {
+                // Do not change the username below.
+                // This should always be `mapbox` (not your username).
+                username = 'mapbox'
+                password = localProperties.getProperty('MAPBOX_DOWNLOADS_TOKEN')
+            }
+        }
     }
 }
 

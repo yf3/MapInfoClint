@@ -20,7 +20,7 @@ public class CameraViewModel extends AndroidViewModel implements LocationListene
         locationRepository.registerListener(this);
     }
 
-    public void findCurrentLocation() {
+    public void updateCurrentLocation() {
         locationRepository.findCurrentLocation();
     }
 

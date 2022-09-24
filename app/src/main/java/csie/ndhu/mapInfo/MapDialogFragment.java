@@ -70,7 +70,7 @@ public class MapDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        Mapbox.getInstance(getContext(), getString(R.string.mapbox_access_token));
+        Mapbox.getInstance(getContext(), getString(R.string.mapbox_public_token));
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_map_dialog, null);
 
