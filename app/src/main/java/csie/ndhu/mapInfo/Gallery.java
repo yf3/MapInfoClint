@@ -35,10 +35,7 @@ public class Gallery extends AppCompatActivity implements GalleryDialogFragment.
             @Override
             public void onItemClick(AdapterView<?> arg0, View view, final int position, long id) {
                 Log.i("onItemClick", String.format("#%d Clicked!", position));
-
-                final String filePath = new File(Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_PICTURES), "CheckIn").listFiles()[position].getAbsolutePath();
-
+                final String filePath = (String) arg0.getAdapter().getItem(position);
                 GalleryDialogFragment fragment = GalleryDialogFragment.newInstance(filePath);
                 fragment.show(getSupportFragmentManager(), "dialog");
 
@@ -64,10 +61,12 @@ public class Gallery extends AppCompatActivity implements GalleryDialogFragment.
             return images.size();
         }
 
-        public Object getItem(int position) {
-            return position;
+        @Override
+        public String getItem(int position) {
+            return images.get(position);
         }
 
+        @Override
         public long getItemId(int position) {
             return position;
         }
@@ -91,10 +90,10 @@ public class Gallery extends AppCompatActivity implements GalleryDialogFragment.
         }
 
         private ArrayList<String> getAllShownImagesPath() {
-            File mediaStorageDir[] = new File(Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_PICTURES), "CheckIn").listFiles();
+            File[] internalStorageDirFiles = getApplicationContext().getFilesDir().listFiles();
             ArrayList<String> listOfAllImages = new ArrayList();
-            for (File file: mediaStorageDir) {
+            for (File file: internalStorageDirFiles) {
+                // TODO: only add jpeg
                 listOfAllImages.add(file.getAbsolutePath());
             }
             return listOfAllImages;

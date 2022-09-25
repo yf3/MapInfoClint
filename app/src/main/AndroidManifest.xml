@@ -30,12 +30,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="csie.ndhu.mapInfo.CameraActivity"
-            android:label="@string/app_name">
+            android:name="csie.ndhu.mapInfo.CameraActivity">
         </activity>
         <activity
-            android:name="csie.ndhu.mapInfo.Gallery"
-            android:label="CheckIn">
+            android:name="csie.ndhu.mapInfo.Gallery">
         </activity>
     </application>
 
