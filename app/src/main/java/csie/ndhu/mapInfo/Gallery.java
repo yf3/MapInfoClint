@@ -1,7 +1,6 @@
 package csie.ndhu.mapInfo;
 
 import android.os.Build;
-import android.os.Environment;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +18,8 @@ import com.bumptech.glide.request.RequestOptions;
 import java.io.File;
 import java.util.ArrayList;
 
-
+// TODO: Convert to Fragment
+// TODO: MVVM
 public class Gallery extends AppCompatActivity implements GalleryDialogFragment.OnFragmentInteractionListener {
 
     @Override
@@ -39,6 +39,14 @@ public class Gallery extends AppCompatActivity implements GalleryDialogFragment.
                 GalleryDialogFragment fragment = GalleryDialogFragment.newInstance(filePath);
                 fragment.show(getSupportFragmentManager(), "dialog");
 
+            }
+        });
+
+        gallery.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // TODO: photo deleting feature
+                return false;
             }
         });
     }
