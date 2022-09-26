@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -41,6 +42,7 @@ public class GalleryDialogFragment extends DialogFragment {
     private TextView textViewResult;
     private TextInputEditText titleEditText;
     private TextInputEditText commentEditText;
+    private ImageButton checkLocationButton;
 
     private OnFragmentInteractionListener mListener;
 
@@ -78,6 +80,12 @@ public class GalleryDialogFragment extends DialogFragment {
         titleEditText = view.findViewById(R.id.title_text);
         commentEditText = view.findViewById(R.id.photo_comment_text);
         // TODO: check photo location
+        checkLocationButton = view.findViewById(R.id.imageButton);
+        checkLocationButton.setOnClickListener(lambdaView -> {
+            LocationParser.LongLatPair longLatPair = getLocationFromFile(new File(photoPath));
+            MapDialogFragment mapDialogFragment = MapDialogFragment.newInstance(longLatPair.getLatitude(), longLatPair.getLongitude());
+            mapDialogFragment.show(getChildFragmentManager(), "map");
+        });
 
         buttonUpload = view.findViewById(R.id.button_upload);
         buttonUpload.setOnClickListener(new View.OnClickListener() {

@@ -42,7 +42,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 
-public class CameraActivity extends AppCompatActivity implements MapDialogFragment.OnFragmentInteractionListener {
+public class CameraActivity extends AppCompatActivity {
 
     private CameraViewModel viewModel;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
@@ -177,9 +177,5 @@ public class CameraActivity extends AppCompatActivity implements MapDialogFragme
         if (null != mCameraProvider)
             mCameraProvider.unbindAll();
         super.onStop();
-    }
-
-    @Override
-    public void onFragmentInteraction() {
     }
 }
