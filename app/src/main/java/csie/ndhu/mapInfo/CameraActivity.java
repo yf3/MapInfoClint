@@ -1,13 +1,9 @@
 package csie.ndhu.mapInfo;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.hardware.Camera;
 import android.location.Location;
-import android.media.ExifInterface;
-import android.os.Environment;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -16,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.core.ImageCaptureException;
-import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
@@ -32,9 +27,6 @@ import android.widget.Button;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
@@ -127,7 +119,8 @@ public class CameraActivity extends AppCompatActivity {
                 public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
                     // TODO: Consider adjusting rotation
                     if (hasLocationPermissions) {
-                        // Show finding location UI
+                        // TODO: Lock capture UI button or combine the following 2 as one async step,
+                        //  or the first taken photo will miss location info by rapidly press capture button
                         viewModel.setPhotoToAddLocation(imageFile);
                         viewModel.requestCurrentLocation();
                     }

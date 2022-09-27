@@ -51,12 +51,12 @@ public class LocationManager {
                 location -> {
                     if (location != null) {
                         currentLocation = location;
-                        Log.i("Location", "Location is found.");
-                        Log.i("Location", String.format("%f, %f", currentLocation.getLongitude(), currentLocation.getLatitude()));
+                        Log.i("LocationManager", "Location is found.");
+                        Log.i("LocationManager", String.format("%f, %f", currentLocation.getLongitude(), currentLocation.getLatitude()));
                         instantLocationListener.onLocationFound();
                     }
                     else {
-                        Log.i("Location", "Location is null.");
+                        Log.i("LocationManager", "Location is null.");
                     }
                 }).addOnFailureListener(
                 location -> {
