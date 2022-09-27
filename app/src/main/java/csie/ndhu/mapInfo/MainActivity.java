@@ -27,7 +27,10 @@ public class MainActivity extends AppCompatActivity {
                     openActivity("csie.ndhu.mapInfo.CameraActivity");
                     return true;
                 case R.id.navigation_gallery:
-                    openActivity("csie.ndhu.mapInfo.Gallery");
+                    GalleryFragment galleryFragment = GalleryFragment.newInstance();
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .add(R.id.test_gallery, galleryFragment).commit();
                     return true;
             }
             return false;
@@ -50,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_nav);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
