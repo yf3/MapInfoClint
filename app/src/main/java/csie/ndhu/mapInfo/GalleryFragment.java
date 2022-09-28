@@ -26,6 +26,7 @@ import com.bumptech.glide.request.RequestOptions;
 import java.io.File;
 import java.util.ArrayList;
 
+// TODO: MVVM
 public class GalleryFragment extends Fragment {
 
     private GallerySharedViewModel mViewModel;

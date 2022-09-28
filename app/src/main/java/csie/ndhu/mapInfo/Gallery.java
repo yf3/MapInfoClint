@@ -18,8 +18,6 @@ import com.bumptech.glide.request.RequestOptions;
 import java.io.File;
 import java.util.ArrayList;
 
-// TODO: Convert to Fragment
-// TODO: MVVM
 public class Gallery extends AppCompatActivity implements GalleryDialogFragment.OnFragmentInteractionListener, MapDialogFragment.OnFragmentInteractionListener {
 
     @Override
