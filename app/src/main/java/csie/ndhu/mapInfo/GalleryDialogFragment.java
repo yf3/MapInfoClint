@@ -44,8 +44,6 @@ public class GalleryDialogFragment extends DialogFragment {
     private TextInputEditText commentEditText;
     private ImageButton checkLocationButton;
 
-//    private OnFragmentInteractionListener mListener;
-
     public GalleryDialogFragment() {
         // Required empty public constructor
     }
@@ -54,6 +52,7 @@ public class GalleryDialogFragment extends DialogFragment {
         GalleryDialogFragment fragment = new GalleryDialogFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM, param);
+        Log.i("Dialog Factory", args.toString());
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,9 +60,10 @@ public class GalleryDialogFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            photoPath = getArguments().getString(ARG_PARAM);
-        }
+//        if (getArguments() != null) {
+//            photoPath = getArguments().getString(ARG_PARAM);
+//        }
+        photoPath = GalleryDialogFragmentArgs.fromBundle(getArguments()).getFileName();
     }
 
     @Override
@@ -178,37 +178,15 @@ public class GalleryDialogFragment extends DialogFragment {
         }
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction();
-//        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-//        mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     */
-//    public interface OnFragmentInteractionListener {
-//        void onFragmentInteraction();
-//    }
+
 }

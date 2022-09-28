@@ -11,7 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 
 public class CameraViewModel extends AndroidViewModel implements LocationListener {
     private LocationManager locationRepository = null;
-    MutableLiveData<Location> instantLocation;
+    private MutableLiveData<Location> instantLocation;
     private PhotoModel photoModel;
 
     public CameraViewModel(@NonNull Application application) {
