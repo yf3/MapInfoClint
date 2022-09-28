@@ -44,7 +44,7 @@ public class GalleryDialogFragment extends DialogFragment {
     private TextInputEditText commentEditText;
     private ImageButton checkLocationButton;
 
-    private OnFragmentInteractionListener mListener;
+//    private OnFragmentInteractionListener mListener;
 
     public GalleryDialogFragment() {
         // Required empty public constructor
@@ -180,26 +180,26 @@ public class GalleryDialogFragment extends DialogFragment {
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction();
-        }
+//        if (mListener != null) {
+//            mListener.onFragmentInteraction();
+//        }
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+//        if (context instanceof OnFragmentInteractionListener) {
+//            mListener = (OnFragmentInteractionListener) context;
+//        } else {
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+//        mListener = null;
     }
 
     /**
@@ -208,7 +208,7 @@ public class GalleryDialogFragment extends DialogFragment {
      * to the activity and potentially other fragments contained in that
      * activity.
      */
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction();
-    }
+//    public interface OnFragmentInteractionListener {
+//        void onFragmentInteraction();
+//    }
 }

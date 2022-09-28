@@ -1,9 +1,14 @@
-apply plugin: 'com.android.application'
+//apply plugin: 'com.android.application'
+
+plugins {
+    id 'com.android.application'
+    id 'androidx.navigation.safeargs'
+}
 
 android {
     compileSdkVersion 31
     defaultConfig {
-        applicationId "csie.ndhu.checkin"
+        applicationId "csie.ndhu.mapInfo"
         minSdkVersion 21
         targetSdkVersion 31
         versionCode 1

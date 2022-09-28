@@ -20,30 +20,12 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_camera:
-                    openActivity("csie.ndhu.mapInfo.CameraActivity");
-                    return true;
-                default:
-                    NavigationUI.onNavDestinationSelected(item, navController);
-                    return true;
-            }
+            NavigationUI.onNavDestinationSelected(item, navController);
+            return true;
         }
     };
-
-    public void openActivity(String activityName) {
-        Intent intent = null;
-        try {
-            intent = new Intent(this, Class.forName(activityName));
-        }
-        catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        startActivity(intent);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         navController = navHostFragment.getNavController();
-        BottomNavigationView bottomNav = (BottomNavigationView) findViewById(R.id.bottom_nav);
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         NavigationUI.setupWithNavController(bottomNav, navController);
     }

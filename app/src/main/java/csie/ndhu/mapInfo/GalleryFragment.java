@@ -7,9 +7,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -106,9 +106,9 @@ public class GalleryFragment extends Fragment {
             public void onItemClick(AdapterView<?> arg0, View view, final int position, long id) {
                 Log.i("onItemClick", String.format("#%d Clicked!", position));
                 final String filePath = (String) arg0.getAdapter().getItem(position);
-                GalleryDialogFragment fragment = GalleryDialogFragment.newInstance(filePath);
-                fragment.show(getActivity().getSupportFragmentManager(), "dialog");
-
+//                GalleryDialogFragment fragment = GalleryDialogFragment.newInstance(filePath);
+//                fragment.show(getActivity().getSupportFragmentManager(), "dialog");
+                Navigation.findNavController(getView()).navigate(GalleryFragmentDirections.editPoiAction(filePath));
             }
         });
 

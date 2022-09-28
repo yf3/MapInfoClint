@@ -12,10 +12,30 @@
         <action
             android:id="@+id/action_homeFragment_to_galleryFragment"
             app:destination="@id/galleryFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_cameraActivity"
+            app:destination="@id/cameraActivity" />
     </fragment>
     <fragment
         android:id="@+id/galleryFragment"
         android:name="csie.ndhu.mapInfo.GalleryFragment"
         android:label="gallery_fragment"
-        tools:layout="@layout/gallery_fragment" />
+        tools:layout="@layout/gallery_fragment" >
+        <action
+            android:id="@+id/edit_poi_action"
+            app:destination="@id/galleryDialogFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/galleryDialogFragment"
+        android:name="csie.ndhu.mapInfo.GalleryDialogFragment"
+        android:label="GalleryDialogFragment" >
+        <argument
+            android:name="fileName"
+            app:argType="string" />
+    </dialog>
+    <activity
+        android:id="@+id/cameraActivity"
+        android:name="csie.ndhu.mapInfo.CameraActivity"
+        android:label="activity_camera"
+        tools:layout="@layout/activity_camera" />
 </navigation>
