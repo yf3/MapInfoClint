@@ -60,9 +60,6 @@ public class GalleryDialogFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            photoPath = getArguments().getString(ARG_PARAM);
-//        }
         photoPath = GalleryDialogFragmentArgs.fromBundle(getArguments()).getFileName();
     }
 

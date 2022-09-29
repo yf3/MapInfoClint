@@ -80,8 +80,9 @@ public class GalleryFragment extends Fragment {
             File[] internalStorageDirFiles = getContext().getFilesDir().listFiles();
             ArrayList<String> listOfAllImages = new ArrayList();
             for (File file: internalStorageDirFiles) {
-                // TODO: only add jpeg
-                listOfAllImages.add(file.getAbsolutePath());
+                if (file.getName().endsWith(PhotoModel.PHOTO_EXT)) {
+                    listOfAllImages.add(file.getAbsolutePath());
+                }
             }
             return listOfAllImages;
         }

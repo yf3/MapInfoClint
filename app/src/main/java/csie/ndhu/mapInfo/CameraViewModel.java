@@ -34,19 +34,18 @@ public class CameraViewModel extends AndroidViewModel implements LocationListene
         locationRepository.findCurrentLocation();
     }
 
-    public MutableLiveData<Location> getInstantLocation() {
-        if (null == instantLocation) {
-            instantLocation = new MutableLiveData<>();
-        }
-        return instantLocation;
-    }
-
-
     @Override
     public void onLocationFound() {
         instantLocation.setValue(locationRepository.getCurrentLocation());
         if (null != photoModel) {
             photoModel.writeLocationExif(instantLocation.getValue());
         }
+    }
+
+    public MutableLiveData<Location> getInstantLocation() {
+        if (null == instantLocation) {
+            instantLocation = new MutableLiveData<>();
+        }
+        return instantLocation;
     }
 }

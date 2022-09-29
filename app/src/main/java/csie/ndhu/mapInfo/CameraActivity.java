@@ -102,7 +102,7 @@ public class CameraActivity extends AppCompatActivity {
         File mediaStorageDir = getFilesDir();
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         File mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-                "IMG_"+ timeStamp + ".jpeg");
+                "IMG_"+ timeStamp + PhotoModel.PHOTO_EXT);
         return mediaFile;
     }
 
@@ -156,19 +156,5 @@ public class CameraActivity extends AppCompatActivity {
 
     private boolean checkCameraHardware(Context context) {
         return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
-    }
-
-    @Override
-    protected void onPause() {
-        if (null != mCameraProvider)
-            mCameraProvider.unbindAll();
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        if (null != mCameraProvider)
-            mCameraProvider.unbindAll();
-        super.onStop();
     }
 }

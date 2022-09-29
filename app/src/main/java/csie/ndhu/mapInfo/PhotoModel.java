@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class PhotoModel {
     File mFile;
+    public static final String PHOTO_EXT = ".jpeg";
 
     public void setFile(File file) {
         mFile = file;
