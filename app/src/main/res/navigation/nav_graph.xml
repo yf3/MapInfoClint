@@ -6,7 +6,7 @@
     app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/homeFragment"
-        android:name="csie.ndhu.mapInfo.HomeFragment"
+        android:name="csie.ndhu.map_info.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/galleryFragment"
-        android:name="csie.ndhu.mapInfo.GalleryFragment"
+        android:name="csie.ndhu.map_info.GalleryFragment"
         android:label="gallery_fragment"
         tools:layout="@layout/gallery_fragment" >
         <action
@@ -27,7 +27,7 @@
     </fragment>
     <dialog
         android:id="@+id/galleryDialogFragment"
-        android:name="csie.ndhu.mapInfo.GalleryDialogFragment"
+        android:name="csie.ndhu.map_info.GalleryDialogFragment"
         android:label="GalleryDialogFragment" >
         <argument
             android:name="fileName"
@@ -35,7 +35,7 @@
     </dialog>
     <activity
         android:id="@+id/cameraActivity"
-        android:name="csie.ndhu.mapInfo.CameraActivity"
+        android:name="csie.ndhu.map_info.CameraActivity"
         android:label="activity_camera"
         tools:layout="@layout/activity_camera" />
 </navigation>

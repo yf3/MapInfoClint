@@ -1,4 +1,4 @@
-package csie.ndhu.mapInfo;
+package csie.ndhu.map_info;
 
 import android.content.Context;
 import android.os.Build;

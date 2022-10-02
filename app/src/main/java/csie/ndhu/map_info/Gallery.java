@@ -1,4 +1,4 @@
-package csie.ndhu.mapInfo;
+package csie.ndhu.map_info;
 
 import android.os.Build;
 import androidx.annotation.RequiresApi;
