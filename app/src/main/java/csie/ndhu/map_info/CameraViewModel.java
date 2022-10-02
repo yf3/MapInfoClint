@@ -7,11 +7,13 @@ import java.io.File;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 public class CameraViewModel extends AndroidViewModel implements LocationListener {
     private LocationManager locationRepository = null;
     private MutableLiveData<Location> instantLocation;
+    public LiveData<Location> observedLocation;
     private PhotoModel photoModel;
 
     public CameraViewModel(@NonNull Application application) {
@@ -19,6 +21,10 @@ public class CameraViewModel extends AndroidViewModel implements LocationListene
     }
 
     public void setupLocationRepo() {
+        if (null == instantLocation) {
+            instantLocation = new MutableLiveData<>();
+        }
+        observedLocation = instantLocation;
         locationRepository = LocationManager.getInstance(getApplication().getApplicationContext());
         locationRepository.registerListener(this);
     }
@@ -42,10 +48,7 @@ public class CameraViewModel extends AndroidViewModel implements LocationListene
         }
     }
 
-    public MutableLiveData<Location> getInstantLocation() {
-        if (null == instantLocation) {
-            instantLocation = new MutableLiveData<>();
-        }
-        return instantLocation;
+    public LiveData<Location> getObservedLocation() {
+        return observedLocation;
     }
 }

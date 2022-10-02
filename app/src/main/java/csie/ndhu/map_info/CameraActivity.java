@@ -63,6 +63,22 @@ public class CameraActivity extends AppCompatActivity {
         requestPermissions();
     }
 
+    private void requestPermissions() {
+        ActivityResultLauncher<String[]> requestPermissionLauncher =
+                registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), isGranted
+                        -> {
+                    if (isGranted.get(Manifest.permission.CAMERA)) {
+                        startCamera();
+                    }
+                    if (isGranted.get(Manifest.permission.ACCESS_FINE_LOCATION) &&
+                            isGranted.get(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                        activatePhotoLocationFeature();
+                        hasLocationPermissions = true;
+                    }
+                });
+        requestPermissionLauncher.launch(PERMISSIONS);
+    }
+
     private Preview getPreview() {
         Preview preview = new Preview.Builder().build();
         PreviewView previewView = findViewById(R.id.camera_preview_view);
@@ -95,7 +111,7 @@ public class CameraActivity extends AppCompatActivity {
         final Observer<Location> locationObserver = location -> {
             onPhotoLocationFound();
         };
-        viewModel.getInstantLocation().observe(this, locationObserver);
+        viewModel.getObservedLocation().observe(this, locationObserver);
     }
 
     private File getInternalImageFile() {
@@ -138,21 +154,7 @@ public class CameraActivity extends AppCompatActivity {
         // Hide finding location UI
     }
 
-    private void requestPermissions() {
-        ActivityResultLauncher<String[]> requestPermissionLauncher =
-                registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), isGranted
-                        -> {
-                    if (isGranted.get(Manifest.permission.CAMERA)) {
-                        startCamera();
-                    }
-                    if (isGranted.get(Manifest.permission.ACCESS_FINE_LOCATION) &&
-                        isGranted.get(Manifest.permission.ACCESS_COARSE_LOCATION)) {
-                        activatePhotoLocationFeature();
-                        hasLocationPermissions = true;
-                    }
-                });
-        requestPermissionLauncher.launch(PERMISSIONS);
-    }
+
 
     private boolean checkCameraHardware(Context context) {
         return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
