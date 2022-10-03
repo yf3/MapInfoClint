@@ -1,6 +1,17 @@
 ## Intro
 The App enables the user to build a point of interest (POI) according to the current location, and post the POI to the target RESTful API endpoint through HTTP request.
 
+- Permission
+- User Location
+- Map API provider
+  - [Mapbox SDK for Android](https://docs.mapbox.com/android/maps/guides/)
+- Camera
+- Network
+  - [Retrofit](https://square.github.io/retrofit/)
+- File Storage
+- Architecture
+- App Navigation
+
 ## Checkin
 The user is able to build a POI through the checkin feature: 
 
