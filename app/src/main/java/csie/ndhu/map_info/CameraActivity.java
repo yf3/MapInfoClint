@@ -43,7 +43,6 @@ public class CameraActivity extends AppCompatActivity {
     private ImageCapture imageCapture;
     private Button captureButton;
 
-    private boolean hasLocationPermissions;
     final String[] PERMISSIONS = {
             Manifest.permission.CAMERA,
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -59,7 +58,6 @@ public class CameraActivity extends AppCompatActivity {
         captureButton = findViewById(R.id.button_capture);
         captureButton.setOnClickListener(captureListener);
 
-        hasLocationPermissions = false;
         requestPermissions();
     }
 
@@ -73,7 +71,6 @@ public class CameraActivity extends AppCompatActivity {
                     if (isGranted.get(Manifest.permission.ACCESS_FINE_LOCATION) &&
                             isGranted.get(Manifest.permission.ACCESS_COARSE_LOCATION)) {
                         activatePhotoLocationFeature();
-                        hasLocationPermissions = true;
                     }
                 });
         requestPermissionLauncher.launch(PERMISSIONS);
@@ -107,54 +104,24 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     private void activatePhotoLocationFeature() {
-        viewModel.setupLocationRepo();
+        viewModel.setupLocationFeature();
         final Observer<Location> locationObserver = location -> {
             onPhotoLocationFound();
         };
         viewModel.getObservedLocation().observe(this, locationObserver);
     }
 
-    private File getInternalImageFile() {
-        File mediaStorageDir = getFilesDir();
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        File mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-                "IMG_"+ timeStamp + PhotoModel.PHOTO_EXT);
-        return mediaFile;
-    }
-
     private final View.OnClickListener captureListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Log.i("Camera", "Capture clicked.");
-            Executor takePictureExecutor = Executors.newSingleThreadExecutor();
-            File imageFile = getInternalImageFile();
-            ImageCapture.OutputFileOptions outputFileOptions =
-                    new ImageCapture.OutputFileOptions.Builder(imageFile).build();
-            imageCapture.takePicture(outputFileOptions, takePictureExecutor, new ImageCapture.OnImageSavedCallback() {
-                @Override
-                public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
-                    // TODO: Consider adjusting rotation
-                    if (hasLocationPermissions) {
-                        // TODO: Lock capture UI button or combine the following 2 as one async step,
-                        //  or the first taken photo will miss location info by rapidly press capture button
-                        viewModel.setPhotoToAddLocation(imageFile);
-                        viewModel.requestCurrentLocation();
-                    }
-                }
-
-                @Override
-                public void onError(@NonNull ImageCaptureException exception) {
-
-                }
-            });
+            viewModel.takePhoto(imageCapture);
         }
     };
 
     public void onPhotoLocationFound() {
         // Hide finding location UI
     }
-
-
 
     private boolean checkCameraHardware(Context context) {
         return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
