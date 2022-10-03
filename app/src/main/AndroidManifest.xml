@@ -32,9 +32,6 @@
         <activity
             android:name="csie.ndhu.map_info.CameraActivity">
         </activity>
-        <activity
-            android:name="csie.ndhu.map_info.Gallery">
-        </activity>
     </application>
 
 </manifest>

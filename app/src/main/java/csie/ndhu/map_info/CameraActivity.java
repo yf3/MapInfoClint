@@ -111,6 +111,7 @@ public class CameraActivity extends AppCompatActivity {
         viewModel.getObservedLocation().observe(this, locationObserver);
     }
 
+    // TODO: DataBinding perhaps
     private final View.OnClickListener captureListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {

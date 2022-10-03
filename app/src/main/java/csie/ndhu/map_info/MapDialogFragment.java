@@ -46,8 +46,6 @@ public class MapDialogFragment extends DialogFragment {
     private double mLatitude;
     private double mLongitude;
 
-    private OnFragmentInteractionListener mListener;
-
     private MapView mapView;
 
     private Button buttonSavePhoto;
@@ -83,14 +81,6 @@ public class MapDialogFragment extends DialogFragment {
 
         initMapView(view, savedInstanceState);
 
-        buttonSavePhoto = view.findViewById(R.id.buttonSavePhoto);
-        buttonSavePhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mListener.onFragmentInteraction();
-            }
-        });
-
         builder.setView(view);
         return builder.create();
     }
@@ -120,18 +110,18 @@ public class MapDialogFragment extends DialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+//        if (context instanceof OnFragmentInteractionListener) {
+//            mListener = (OnFragmentInteractionListener) context;
+//        } else {
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+//        mListener = null;
     }
 
     /**
@@ -144,8 +134,8 @@ public class MapDialogFragment extends DialogFragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction();
-    }
+//    public interface OnFragmentInteractionListener {
+//        // TODO: Update argument type and name
+//        void onFragmentInteraction();
+//    }
 }
