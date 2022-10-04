@@ -26,66 +26,12 @@ import com.bumptech.glide.request.RequestOptions;
 import java.io.File;
 import java.util.ArrayList;
 
-// TODO: MVVM
 public class GalleryFragment extends Fragment {
 
     private GallerySharedViewModel mViewModel;
 
     public static GalleryFragment newInstance() {
         return new GalleryFragment();
-    }
-
-    private class ImageAdapter extends BaseAdapter {
-        private Context context;
-        private ArrayList<String> images;
-
-        public ImageAdapter(Context localContext) {
-            context = localContext;
-            images = getAllShownImagesPath();
-        }
-
-        public int getCount() {
-            return images.size();
-        }
-
-        @Override
-        public String getItem(int position) {
-            return images.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            ImageView picturesView;
-            if (convertView == null) {
-                picturesView = new ImageView(context);
-                picturesView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                picturesView.setLayoutParams(new GridView.LayoutParams(270, 270));
-
-            } else {
-                picturesView = (ImageView) convertView;
-            }
-
-            Glide.with(context).load(images.get(position)).apply(new RequestOptions()
-                    .placeholder(R.drawable.ic_launcher_background).centerCrop())
-                    .into(picturesView);
-
-            return picturesView;
-        }
-
-        private ArrayList<String> getAllShownImagesPath() {
-            File[] internalStorageDirFiles = getContext().getFilesDir().listFiles();
-            ArrayList<String> listOfAllImages = new ArrayList();
-            for (File file: internalStorageDirFiles) {
-                if (file.getName().endsWith(PhotoModel.PHOTO_EXT)) {
-                    listOfAllImages.add(file.getAbsolutePath());
-                }
-            }
-            return listOfAllImages;
-        }
     }
 
     @Override
@@ -97,9 +43,9 @@ public class GalleryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mViewModel = new ViewModelProvider(this).get(GallerySharedViewModel.class);
         GridView gallery = getView().findViewById(R.id.galleryGridView);
-
-        gallery.setAdapter(new GalleryFragment.ImageAdapter(getContext()));
+        gallery.setAdapter(new ImageAdapter(getAllShownImagesPath()));
 
         gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -110,8 +56,16 @@ public class GalleryFragment extends Fragment {
                 Navigation.findNavController(getView()).navigate(GalleryFragmentDirections.editPoiAction(filePath));
             }
         });
+    }
 
-        mViewModel = new ViewModelProvider(this).get(GallerySharedViewModel.class);
-        // TODO: Use the ViewModel
+    private ArrayList<String> getAllShownImagesPath() {
+        File[] internalStorageDirFiles = getContext().getFilesDir().listFiles();
+        ArrayList<String> listOfAllImages = new ArrayList();
+        for (File file: internalStorageDirFiles) {
+            if (file.getName().endsWith(PhotoModel.PHOTO_EXT)) {
+                listOfAllImages.add(file.getAbsolutePath());
+            }
+        }
+        return listOfAllImages;
     }
 }

@@ -2,7 +2,6 @@ package csie.ndhu.map_info;
 
 import android.app.Application;
 import android.location.Location;
-
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,9 +19,8 @@ public class CameraViewModel extends AndroidViewModel implements LocationListene
     private LocationManager locationRepository = null;
     private MutableLiveData<Location> instantLocation;
     public LiveData<Location> observedLocation;
-    private PhotoModel photoModel;
     private boolean hasLocationPermissions = false;
-
+    private PhotoModel photoModel;
 
     public CameraViewModel(@NonNull Application application) {
         super(application);
@@ -36,6 +34,13 @@ public class CameraViewModel extends AndroidViewModel implements LocationListene
         observedLocation = instantLocation;
         locationRepository = LocationManager.getInstance(getApplication().getApplicationContext());
         locationRepository.registerListener(this);
+    }
+
+    public void setPhotoToAddLocation(File file) {
+        if (null == photoModel) {
+            photoModel = new PhotoModel(file);
+        }
+        photoModel.setFile(file);
     }
 
     public void takePhoto(ImageCapture imageCapture) {
@@ -68,13 +73,6 @@ public class CameraViewModel extends AndroidViewModel implements LocationListene
         File mediaFile = new File(mediaStorageDir.getPath() + File.separator +
                 "IMG_"+ timeStamp + PhotoModel.PHOTO_EXT);
         return mediaFile;
-    }
-
-    public void setPhotoToAddLocation(File file) {
-        if (null == photoModel) {
-            photoModel = new PhotoModel();
-        }
-        photoModel.setFile(file);
     }
 
     public void requestCurrentLocation() {

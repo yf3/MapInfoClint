@@ -7,10 +7,17 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class PhotoModel {
-    File mFile;
     public static final String PHOTO_EXT = ".jpeg";
+    private File mFile;
+    private ExifInterface mExifInterface;
+
+    public PhotoModel(File file) {
+        mFile = file;
+    }
 
     public void setFile(File file) {
         mFile = file;
@@ -30,5 +37,17 @@ public class PhotoModel {
         } catch (IOException e) {
             Log.d(null, "Error accessing file: " + e.getMessage());
         }
+    }
+
+    public String getLocationExif() {
+        String locationDescription;
+        try {
+            final ExifInterface exifInterface = new ExifInterface(mFile.getAbsolutePath());
+            locationDescription = exifInterface.getAttribute(ExifInterface.TAG_IMAGE_DESCRIPTION);
+        } catch (IOException e) {
+            locationDescription = e.getMessage();
+            e.printStackTrace();
+        }
+        return locationDescription;
     }
 }

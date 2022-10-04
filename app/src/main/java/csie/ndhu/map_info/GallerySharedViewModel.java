@@ -1,7 +1,15 @@
 package csie.ndhu.map_info;
 
-import androidx.lifecycle.ViewModel;
+import android.app.Application;
 
-public class GallerySharedViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+
+public class GallerySharedViewModel extends AndroidViewModel {
+
+    public GallerySharedViewModel(@NonNull Application application) {
+        super(application);
+    }
+
+
 }

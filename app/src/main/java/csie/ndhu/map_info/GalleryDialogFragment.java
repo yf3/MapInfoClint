@@ -72,7 +72,7 @@ public class GalleryDialogFragment extends DialogFragment {
         imageView = view.findViewById(R.id.imageViewTemp);
         imageView.setImageDrawable(Drawable.createFromPath(photoPath));
         textViewResult = view.findViewById(R.id.text_result);
-        textViewResult.setText("");
+        textViewResult.setText(""); // TODO: decouple
         titleEditText = view.findViewById(R.id.title_text);
         commentEditText = view.findViewById(R.id.photo_comment_text);
         // TODO: check photo location
@@ -87,6 +87,7 @@ public class GalleryDialogFragment extends DialogFragment {
         buttonUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // TODO: decouple
                 textViewResult.setText("uploading");
                 uploadToServer(photoPath);
             }
@@ -103,7 +104,6 @@ public class GalleryDialogFragment extends DialogFragment {
     }
 
     @Override
-    // Do not use
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_gallery_dialog, container, false);
@@ -111,7 +111,6 @@ public class GalleryDialogFragment extends DialogFragment {
     }
 
     @Override
-    // Do not use
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
     }
