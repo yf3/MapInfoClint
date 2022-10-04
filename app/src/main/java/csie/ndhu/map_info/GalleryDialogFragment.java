@@ -162,15 +162,8 @@ public class GalleryDialogFragment extends DialogFragment {
     }
 
     private LocationParser.LongLatPair getLocationFromFile(File file) {
-        ExifInterface exifInterface;
-        try {
-            exifInterface = new ExifInterface(file.getAbsolutePath());
-            String locationDescription = exifInterface.getAttribute(ExifInterface.TAG_IMAGE_DESCRIPTION);
-            return LocationParser.getLongLatPair(locationDescription, LocationParser.LONGITUDE_LABEL, LocationParser.LATITUDE_LABEL);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new LocationParser.LongLatPair(0, 0);
-        }
+        String locationDescription = new PhotoModel(file).getLocationExif();
+        return LocationParser.getLongLatPair(locationDescription, LocationParser.LONGITUDE_LABEL, LocationParser.LATITUDE_LABEL);
     }
 
     @Override

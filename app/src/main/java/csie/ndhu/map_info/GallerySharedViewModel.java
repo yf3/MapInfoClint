@@ -11,5 +11,4 @@ public class GallerySharedViewModel extends AndroidViewModel {
         super(application);
     }
 
-
 }
