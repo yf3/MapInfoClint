@@ -1,19 +1,15 @@
 package csie.ndhu.map_info;
 
-import android.app.Application;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
-public class GallerySharedViewModel extends AndroidViewModel {
+public class POIEditorViewModel extends ViewModel {
 
     private POIRepository poiRepository;
     private MutableLiveData<String> uploadStatus;
 
-    public GallerySharedViewModel(@NonNull Application application) {
-        super(application);
+    public POIEditorViewModel() {
         poiRepository = new POIRepository();
         uploadStatus = new MutableLiveData<>();
     }

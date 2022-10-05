@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.media.ExifInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,23 +20,14 @@ import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.io.File;
-import java.io.IOException;
-
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
+
 
 public class GalleryDialogFragment extends DialogFragment {
     private static final String ARG_PARAM = "param";
 
-    private GallerySharedViewModel mViewModel;
+    private POIEditorViewModel mViewModel;
 
     private String photoPath;
 
@@ -64,7 +54,7 @@ public class GalleryDialogFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(GallerySharedViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(POIEditorViewModel.class);
         photoPath = GalleryDialogFragmentArgs.fromBundle(getArguments()).getFileName();
     }
 

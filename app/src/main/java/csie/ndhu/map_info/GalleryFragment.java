@@ -1,6 +1,5 @@
 package csie.ndhu.map_info;
 
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -16,19 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.ImageView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-
 import java.io.File;
 import java.util.ArrayList;
 
 public class GalleryFragment extends Fragment {
 
-    private GallerySharedViewModel mViewModel;
+    private POIEditorViewModel mViewModel;
 
     public static GalleryFragment newInstance() {
         return new GalleryFragment();
@@ -43,7 +36,7 @@ public class GalleryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(GallerySharedViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(POIEditorViewModel.class);
         GridView gallery = getView().findViewById(R.id.galleryGridView);
         gallery.setAdapter(new ImageAdapter(getAllShownImagesPath()));
 
