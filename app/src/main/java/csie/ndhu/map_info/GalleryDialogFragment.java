@@ -24,6 +24,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.io.File;
 import java.io.IOException;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -74,15 +75,19 @@ public class GalleryDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_gallery_dialog, null);
         builder.setView(view);
 
-        imageView = view.findViewById(R.id.imageViewTemp);
-        imageView.setImageDrawable(Drawable.createFromPath(photoPath));
-        textViewResult = view.findViewById(R.id.text_result);
-        // TODO: Observe LiveData to change text
         titleEditText = view.findViewById(R.id.title_text);
         commentEditText = view.findViewById(R.id.photo_comment_text);
+        imageView = view.findViewById(R.id.imageViewTemp);
+        imageView.setImageDrawable(Drawable.createFromPath(photoPath));
+
+        textViewResult = view.findViewById(R.id.text_result);
+        final Observer<String> uploadObserver = uploadStatus -> {
+            textViewResult.setText(uploadStatus);
+        };
+        mViewModel.getUploadStatus().observe(this, uploadObserver);
+
         // TODO: check photo location
         checkLocationButton = view.findViewById(R.id.imageButton);
-
         checkLocationButton.setOnClickListener(lambdaView -> {
             LocationParser.LongLatPair longLatPair = PhotoModel.getLocationPair(photoPath);
             MapDialogFragment mapDialogFragment = MapDialogFragment.newInstance(longLatPair.getLatitude(), longLatPair.getLongitude());

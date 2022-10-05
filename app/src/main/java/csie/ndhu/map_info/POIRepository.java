@@ -11,7 +11,7 @@ import retrofit2.Retrofit;
 
 public class POIRepository {
 
-    public void uploadPOI(POIArgs poiArgs) {
+    public void uploadPOI(POIArgs poiArgs, UploadListener uploadListener) {
         Retrofit retrofit = NetworkClient.getRetrofitClient();
         UploadAPIs uploadAPIs = retrofit.create(UploadAPIs.class);
 
@@ -33,20 +33,24 @@ public class POIRepository {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    // TODO: update UI state in viewmodel
-                    // textViewResult.setText("Upload Failed!");
+                    uploadListener.onBadRequest();
                 }
                 else {
                     Log.i("Response code", String.valueOf(response.code()));
-                    // TODO: update UI state in viewmodel
-                    // textViewResult.setText("Upload Success!");
+                    uploadListener.onSuccess();
                 }
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
-                // TODO: update UI state in viewmodel
+                uploadListener.onFailure();
             }
         });
+    }
+
+    interface UploadListener {
+        void onSuccess();
+        void onBadRequest();
+        void onFailure();
     }
 }
