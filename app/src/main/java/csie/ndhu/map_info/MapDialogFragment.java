@@ -25,20 +25,6 @@ import com.mapbox.mapboxsdk.plugins.annotation.SymbolManager;
 import com.mapbox.mapboxsdk.plugins.annotation.SymbolOptions;
 
 
-/**
- * Activities that contain this fragment must implement the
- * {@link MapDialogFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link MapDialogFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-
-/**
- *  Open from an activity:
- *  MapDialogFragment dialogFragment = MapDialogFragment.newInstance(latitude, longitude);
- *  dialogFragment.show(getSupportFragmentManager(), "map");
- */
-
 public class MapDialogFragment extends DialogFragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -135,7 +121,6 @@ public class MapDialogFragment extends DialogFragment {
      * >Communicating with Other Fragments</a> for more information.
      */
 //    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
 //        void onFragmentInteraction();
 //    }
 }

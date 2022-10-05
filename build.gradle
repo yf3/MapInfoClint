@@ -21,6 +21,9 @@ def Properties localProperties = new Properties()
 localProperties.load(project.rootProject.file("local.properties").newDataInputStream())
 
 allprojects {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+    }
     repositories {
         google()
         jcenter()

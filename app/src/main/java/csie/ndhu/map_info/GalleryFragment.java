@@ -60,7 +60,7 @@ public class GalleryFragment extends Fragment {
 
     private ArrayList<String> getAllShownImagesPath() {
         File[] internalStorageDirFiles = getContext().getFilesDir().listFiles();
-        ArrayList<String> listOfAllImages = new ArrayList();
+        ArrayList<String> listOfAllImages = new ArrayList<>();
         for (File file: internalStorageDirFiles) {
             if (file.getName().endsWith(PhotoModel.PHOTO_EXT)) {
                 listOfAllImages.add(file.getAbsolutePath());

@@ -12,7 +12,6 @@ public class HomeFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
 
     public HomeFragment() {

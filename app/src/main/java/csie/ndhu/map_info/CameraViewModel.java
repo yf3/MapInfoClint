@@ -51,8 +51,6 @@ public class CameraViewModel extends AndroidViewModel implements LocationListene
             public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
                 // TODO: Consider adjusting rotation
                 if (hasLocationPermissions) {
-                    // TODO: Lock capture UI button or combine the following 2 as one async step,
-                    //  or the first taken photo will miss location info by rapidly press capture button
                     setPhotoToAddLocation(imageFile);
                     requestCurrentLocation();
                 }
