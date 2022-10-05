@@ -77,7 +77,7 @@ public class GalleryDialogFragment extends DialogFragment {
         imageView = view.findViewById(R.id.imageViewTemp);
         imageView.setImageDrawable(Drawable.createFromPath(photoPath));
         textViewResult = view.findViewById(R.id.text_result);
-        textViewResult.setText(""); // TODO: decouple
+        // TODO: Observe LiveData to change text
         titleEditText = view.findViewById(R.id.title_text);
         commentEditText = view.findViewById(R.id.photo_comment_text);
         // TODO: check photo location

@@ -33,16 +33,19 @@ public class POIRepository {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-//                    textViewResult.setText("Upload Failed!");
+                    // TODO: update UI state in viewmodel
+                    // textViewResult.setText("Upload Failed!");
                 }
                 else {
                     Log.i("Response code", String.valueOf(response.code()));
-//                    textViewResult.setText("Upload Success!");
+                    // TODO: update UI state in viewmodel
+                    // textViewResult.setText("Upload Success!");
                 }
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
+                // TODO: update UI state in viewmodel
             }
         });
     }

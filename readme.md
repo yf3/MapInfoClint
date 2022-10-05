@@ -3,9 +3,11 @@ The App enables the user to build a point of interest (POI) according to the cur
 
 - Permission
 - User Location
+  - [Fused Location Provider API](https://developers.google.com/location-context/fused-location-provider) by Google
 - Map API provider
   - [Mapbox SDK for Android](https://docs.mapbox.com/android/maps/guides/)
 - Camera
+  - Jetpack [CameraX](https://developer.android.com/training/camerax)
 - Network
   - [Retrofit](https://square.github.io/retrofit/)
 - File Storage
