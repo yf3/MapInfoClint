@@ -21,8 +21,6 @@ import java.util.ArrayList;
 
 public class GalleryFragment extends Fragment {
 
-    private POIEditorViewModel mViewModel;
-
     public static GalleryFragment newInstance() {
         return new GalleryFragment();
     }
@@ -36,7 +34,6 @@ public class GalleryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(POIEditorViewModel.class);
         GridView gallery = getView().findViewById(R.id.galleryGridView);
         gallery.setAdapter(new ImageAdapter(getAllShownImagesPath()));
 

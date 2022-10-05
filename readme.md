@@ -11,6 +11,9 @@ The App enables the user to build a point of interest (POI) according to the cur
 - Network
   - [Retrofit](https://square.github.io/retrofit/)
 - File Storage
+  - Use Internal Storage
+  - Exif on Photo
+  - [Glide](https://bumptech.github.io/glide/) for Loading
 - Architecture
 - App Navigation
 
