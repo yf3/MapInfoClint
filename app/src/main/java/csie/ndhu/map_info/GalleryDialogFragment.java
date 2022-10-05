@@ -24,6 +24,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.io.File;
 import java.io.IOException;
 
+import androidx.lifecycle.ViewModelProvider;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -34,6 +35,9 @@ import retrofit2.Retrofit;
 
 public class GalleryDialogFragment extends DialogFragment {
     private static final String ARG_PARAM = "param";
+
+    private GallerySharedViewModel mViewModel;
+
     private String photoPath;
 
     private ImageView imageView;
@@ -59,6 +63,7 @@ public class GalleryDialogFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mViewModel = new ViewModelProvider(this).get(GallerySharedViewModel.class);
         photoPath = GalleryDialogFragmentArgs.fromBundle(getArguments()).getFileName();
     }
 
@@ -77,8 +82,9 @@ public class GalleryDialogFragment extends DialogFragment {
         commentEditText = view.findViewById(R.id.photo_comment_text);
         // TODO: check photo location
         checkLocationButton = view.findViewById(R.id.imageButton);
+
         checkLocationButton.setOnClickListener(lambdaView -> {
-            LocationParser.LongLatPair longLatPair = getLocationFromFile(new File(photoPath));
+            LocationParser.LongLatPair longLatPair = PhotoModel.getLocationPair(photoPath);
             MapDialogFragment mapDialogFragment = MapDialogFragment.newInstance(longLatPair.getLatitude(), longLatPair.getLongitude());
             mapDialogFragment.show(getChildFragmentManager(), "map");
         });
@@ -87,9 +93,8 @@ public class GalleryDialogFragment extends DialogFragment {
         buttonUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: decouple
-                textViewResult.setText("uploading");
-                uploadToServer(photoPath);
+                POIArgs poiArgs = new POIArgs(titleEditText.getText().toString(), photoPath, commentEditText.getText().toString());
+                mViewModel.upload(poiArgs);
             }
         });
 
@@ -113,57 +118,6 @@ public class GalleryDialogFragment extends DialogFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-    }
-
-    // Use Request Body instead of String because of the Retrofit converter adding quote problem
-    private RequestBody getStringBody(String string) {
-        return RequestBody.create(MediaType.parse("text/plain"), string);
-    }
-
-    private void uploadToServer(String filePath) {
-        Retrofit retrofit = NetworkClient.getRetrofitClient();
-        UploadAPIs uploadAPIs = retrofit.create(UploadAPIs.class);
-
-        File photo = new File(filePath);
-        RequestBody imageReqBody = RequestBody.create(MediaType.parse("image/*"), photo);
-        MultipartBody.Part filePart = MultipartBody.Part.createFormData("attachment", photo.getName(), imageReqBody);
-
-        LocationParser.LongLatPair longLatPair = getLocationFromFile(photo);
-
-        Log.i("Photo Location", String.format("%f, %f", longLatPair.getLongitude(), longLatPair.getLatitude()));
-
-        Call call = uploadAPIs.uploadImage(getStringBody(titleEditText.getText().toString()),
-                filePart,
-                longLatPair.getLongitude(),
-                longLatPair.getLatitude(),
-                getStringBody(commentEditText.getText().toString()));
-
-        call.enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) {
-                if (response.code() == 400) {
-                    try {
-                        Log.i("Bad Request 400", response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    textViewResult.setText("Upload Failed!");
-                }
-                else {
-                    Log.i("Response code", String.valueOf(response.code()));
-                    textViewResult.setText("Upload Success!");
-                }
-            }
-
-            @Override
-            public void onFailure(Call call, Throwable t) {
-            }
-        });
-    }
-
-    private LocationParser.LongLatPair getLocationFromFile(File file) {
-        String locationDescription = new PhotoModel(file).getLocationExif();
-        return LocationParser.getLongLatPair(locationDescription, LocationParser.LONGITUDE_LABEL, LocationParser.LATITUDE_LABEL);
     }
 
     @Override

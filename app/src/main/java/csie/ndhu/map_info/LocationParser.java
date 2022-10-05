@@ -41,11 +41,11 @@ public class LocationParser {
         }
     }
 
-    public static LongLatPair getLongLatPair(String description, String longLabelName, String latLabelName) {
+    public static LongLatPair getLongLatPair(String description) {
         double longitude, latitude;
         try {
-            longitude = getValueFromDescription(description, longLabelName);
-            latitude = getValueFromDescription(description, latLabelName);
+            longitude = getValueFromDescription(description, LONGITUDE_LABEL);
+            latitude = getValueFromDescription(description, LATITUDE_LABEL);
             return new LongLatPair(longitude, latitude);
         } catch (LabelNotFoundException e) {
             e.printStackTrace();

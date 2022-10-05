@@ -13,7 +13,6 @@ import java.util.Date;
 public class PhotoModel {
     public static final String PHOTO_EXT = ".jpeg";
     private File mFile;
-    private ExifInterface mExifInterface;
 
     public PhotoModel(File file) {
         mFile = file;
@@ -39,15 +38,20 @@ public class PhotoModel {
         }
     }
 
-    public String getLocationExif() {
+    public static String getLocationExif(String filePath) {
         String locationDescription;
         try {
-            final ExifInterface exifInterface = new ExifInterface(mFile.getAbsolutePath());
+            final ExifInterface exifInterface = new ExifInterface(filePath);
             locationDescription = exifInterface.getAttribute(ExifInterface.TAG_IMAGE_DESCRIPTION);
         } catch (IOException e) {
             locationDescription = e.getMessage();
             e.printStackTrace();
         }
         return locationDescription;
+    }
+
+    public static LocationParser.LongLatPair getLocationPair(String filePath) {
+        String locationDescription = getLocationExif(filePath);
+        return LocationParser.getLongLatPair(locationDescription);
     }
 }
