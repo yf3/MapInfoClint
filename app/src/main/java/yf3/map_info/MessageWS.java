@@ -55,7 +55,6 @@ public class MessageWS {
 //        runOnUiThread(new Runnable() {
 //            @Override
 //            public void run() {
-//                mTextMessage.setText(mTextMessage.getText().toString() + "\n\n" + text);
 //            }
 //        });
     }
