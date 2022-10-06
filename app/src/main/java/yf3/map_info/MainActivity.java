@@ -1,4 +1,4 @@
-package csie.ndhu.map_info;
+package yf3.map_info;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;
