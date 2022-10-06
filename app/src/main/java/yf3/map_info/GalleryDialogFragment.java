@@ -71,9 +71,7 @@ public class GalleryDialogFragment extends DialogFragment {
         imageView.setImageDrawable(Drawable.createFromPath(photoPath));
 
         textViewResult = view.findViewById(R.id.text_result);
-        final Observer<String> uploadObserver = uploadStatus -> {
-            textViewResult.setText(uploadStatus);
-        };
+        final Observer<String> uploadObserver = uploadStatus -> textViewResult.setText(uploadStatus);
         mViewModel.getUploadStatus().observe(this, uploadObserver);
 
         // TODO: check photo location
@@ -106,8 +104,7 @@ public class GalleryDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_gallery_dialog, container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_gallery_dialog, container, false);
     }
 
     @Override

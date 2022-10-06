@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.io.IOException;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,14 +18,14 @@ public class POIRepository {
 
         PointOfInterest poi = new PointOfInterest(poiArgs);
 
-        Call call = uploadAPIs.uploadImage(
+        Call<ResponseBody> call = uploadAPIs.uploadImage(
                 poi.mTitleStringBody,
                 poi.mImagePart,
                 poi.mLongitude,
                 poi.mLatitude,
                 poi.mCommentStringBody);
 
-        call.enqueue(new Callback() {
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call call, Response response) {
                 if (response.code() == 400) {

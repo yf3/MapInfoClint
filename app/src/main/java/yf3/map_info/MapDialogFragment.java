@@ -11,7 +11,6 @@ import androidx.fragment.app.DialogFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
@@ -26,15 +25,13 @@ import com.mapbox.mapboxsdk.plugins.annotation.SymbolOptions;
 
 
 public class MapDialogFragment extends DialogFragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_LATITUDE = "mLatitude";
+    private static final String ARG_LONGITUDE = "mLongitude";
 
     private double mLatitude;
     private double mLongitude;
 
     private MapView mapView;
-
-    private Button buttonSavePhoto;
 
     public MapDialogFragment() {
         // Required empty public constructor
@@ -43,8 +40,8 @@ public class MapDialogFragment extends DialogFragment {
     public static MapDialogFragment newInstance(double latitude, double longitude) {
         MapDialogFragment fragment = new MapDialogFragment();
         Bundle args = new Bundle();
-        args.putDouble(ARG_PARAM1, latitude);
-        args.putDouble(ARG_PARAM2, longitude);
+        args.putDouble(ARG_LATITUDE, latitude);
+        args.putDouble(ARG_LONGITUDE, longitude);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,8 +50,8 @@ public class MapDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mLatitude = getArguments().getDouble(ARG_PARAM1);
-            mLongitude = getArguments().getDouble(ARG_PARAM2);
+            mLatitude = getArguments().getDouble(ARG_LATITUDE);
+            mLongitude = getArguments().getDouble(ARG_LONGITUDE);
         }
     }
 
