@@ -1,30 +1,24 @@
 package yf3.map_info;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
-import android.view.MenuItem;
-
 
 public class MainActivity extends AppCompatActivity {
 
-    private NavController navController;
+    private NavController mNavController;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            NavigationUI.onNavDestinationSelected(item, navController);
-            return true;
-        }
-    };
+    private final NavigationBarView.OnItemSelectedListener mOnItemSelectedListener = (item -> {
+        NavigationUI.onNavDestinationSelected(item, mNavController);
+        return true;
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +26,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        navController = navHostFragment.getNavController();
+        mNavController = navHostFragment.getNavController();
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
-        bottomNav.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        NavigationUI.setupWithNavController(bottomNav, navController);
+        bottomNav.setOnItemSelectedListener(mOnItemSelectedListener);
+        NavigationUI.setupWithNavController(bottomNav, mNavController);
     }
 
     @Override

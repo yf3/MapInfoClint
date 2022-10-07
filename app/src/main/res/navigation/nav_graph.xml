@@ -27,6 +27,9 @@
         <action
             android:id="@+id/edit_poi_action"
             app:destination="@id/galleryDialogFragment" />
+        <action
+            android:id="@+id/photo_detail_action"
+            app:destination="@id/albumDialogFragment" />
     </fragment>
     <dialog
         android:id="@+id/galleryDialogFragment"
@@ -46,4 +49,12 @@
         android:name="yf3.map_info.MapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" />
+    <dialog
+        android:id="@+id/albumDialogFragment"
+        android:name="yf3.map_info.AlbumDialogFragment"
+        android:label="AlbumDialogFragment">
+        <argument
+            android:name="fileName"
+            app:argType="string" />
+    </dialog>
 </navigation>

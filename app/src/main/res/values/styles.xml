@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="DefaultTheme" parent="Theme.Material3.DayNight">
+        <item name="colorPrimary">@color/lime_100_dark</item>
+        <item name="colorPrimaryDark">@color/black</item>
+    </style>
+
+
 </resources>

@@ -31,12 +31,9 @@ public class GalleryDialogFragment extends DialogFragment {
 
     private String photoPath;
 
-    private ImageView imageView;
-    private Button buttonUpload;
     private TextView textViewResult;
     private TextInputEditText titleEditText;
     private TextInputEditText commentEditText;
-    private ImageButton checkLocationButton;
 
     public GalleryDialogFragment() {
         // Required empty public constructor
@@ -60,14 +57,14 @@ public class GalleryDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.fragment_gallery_dialog, null);
+        View view = inflater.inflate(R.layout.fragment_gallery_dialog, (ViewGroup) getView());
         builder.setView(view);
 
         titleEditText = view.findViewById(R.id.title_text);
         commentEditText = view.findViewById(R.id.photo_comment_text);
-        imageView = view.findViewById(R.id.imageViewTemp);
+        ImageView imageView = view.findViewById(R.id.imageViewTemp);
         imageView.setImageDrawable(Drawable.createFromPath(photoPath));
 
         textViewResult = view.findViewById(R.id.text_result);
@@ -75,20 +72,17 @@ public class GalleryDialogFragment extends DialogFragment {
         mViewModel.getUploadStatus().observe(this, uploadObserver);
 
         // TODO: check photo location
-        checkLocationButton = view.findViewById(R.id.imageButton);
+        ImageButton checkLocationButton = view.findViewById(R.id.imageButton);
         checkLocationButton.setOnClickListener(lambdaView -> {
             LocationParser.LongLatPair longLatPair = PhotoModel.getLocationPair(photoPath);
             MapDialogFragment mapDialogFragment = MapDialogFragment.newInstance(longLatPair.getLatitude(), longLatPair.getLongitude());
             mapDialogFragment.show(getChildFragmentManager(), "map");
         });
 
-        buttonUpload = view.findViewById(R.id.button_upload);
-        buttonUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                POIArgs poiArgs = new POIArgs(titleEditText.getText().toString(), photoPath, commentEditText.getText().toString());
-                mViewModel.upload(poiArgs);
-            }
+        Button buttonUpload = view.findViewById(R.id.button_upload);
+        buttonUpload.setOnClickListener(lambdaView -> {
+            POIArgs poiArgs = new POIArgs(titleEditText.getText().toString(), photoPath, commentEditText.getText().toString());
+            mViewModel.upload(poiArgs);
         });
 
         Spinner poiTypeSpinner = view.findViewById(R.id.poitype_spinner);
@@ -99,17 +93,6 @@ public class GalleryDialogFragment extends DialogFragment {
         AlertDialog dialog = builder.create();
         dialog.setCanceledOnTouchOutside(false);
         return dialog;
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_gallery_dialog, container, false);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-
     }
 
     @Override

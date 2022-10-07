@@ -42,7 +42,7 @@ public class GalleryFragment extends Fragment {
             public void onItemClick(AdapterView<?> arg0, View view, final int position, long id) {
                 Log.i("onItemClick", String.format("#%d Clicked!", position));
                 final String filePath = (String) arg0.getAdapter().getItem(position);
-                Navigation.findNavController(getView()).navigate(GalleryFragmentDirections.editPoiAction(filePath));
+                Navigation.findNavController(getView()).navigate(GalleryFragmentDirections.photoDetailAction(filePath));
             }
         });
     }
