@@ -4,10 +4,9 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.DialogFragment
-
-private const val ARG = "photoPathArg"
 
 class AlbumDialogFragment: DialogFragment() {
 
@@ -16,7 +15,7 @@ class AlbumDialogFragment: DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            photoPath = it.getString(ARG)
+            photoPath = AlbumDialogFragmentArgs.fromBundle(it).filePath
         }
     }
 
@@ -25,10 +24,14 @@ class AlbumDialogFragment: DialogFragment() {
         var view = layoutInflater.inflate(R.layout.fragment_album_dialog, null)
         view.findViewById<ComposeView>(R.id.compose_view).apply {
             setContent {
-                Text("Hello Compose")
+                hello_compose(photoPath)
             }
         }
         return builder.setView(view).create();
     }
 
+    @Composable
+    fun hello_compose(photo_path: String?) {
+        Text("Photo Path: $photo_path")
+    }
 }

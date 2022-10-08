@@ -54,7 +54,7 @@
         android:name="yf3.map_info.AlbumDialogFragment"
         android:label="AlbumDialogFragment">
         <argument
-            android:name="fileName"
+            android:name="filePath"
             app:argType="string" />
     </dialog>
 </navigation>

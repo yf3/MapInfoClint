@@ -25,7 +25,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 
 public class GalleryDialogFragment extends DialogFragment {
-    private static final String ARG_PARAM = "param";
 
     private POIEditorViewModel mViewModel;
 
@@ -37,15 +36,6 @@ public class GalleryDialogFragment extends DialogFragment {
 
     public GalleryDialogFragment() {
         // Required empty public constructor
-    }
-
-    public static GalleryDialogFragment newInstance(String param) {
-        GalleryDialogFragment fragment = new GalleryDialogFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM, param);
-        Log.i("Dialog Factory", args.toString());
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
