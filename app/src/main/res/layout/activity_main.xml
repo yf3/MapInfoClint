@@ -15,7 +15,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/bottom_nav"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav"
 
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph" />
@@ -30,7 +30,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/navigation" >
+        app:menu="@menu/app_bottom_menu" >
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
