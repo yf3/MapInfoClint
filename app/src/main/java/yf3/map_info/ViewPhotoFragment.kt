@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ViewPhotoFragment: Fragment() {
 
@@ -31,6 +33,10 @@ class ViewPhotoFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val imageView: ImageView? = view.findViewById(R.id.mainImageView)
         imageView?.setImageDrawable(Drawable.createFromPath(photoPath))
+        val uploadFAB: FloatingActionButton? = view.findViewById(R.id.uploadFAB)
+        uploadFAB?.setOnClickListener {
+            Navigation.findNavController(it).navigate(ViewPhotoFragmentDirections.actionViewPhotoFragmentToPOIEditFragment(photoPath))
+        }
     }
 
 }

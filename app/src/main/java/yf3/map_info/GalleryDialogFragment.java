@@ -31,7 +31,6 @@ public class GalleryDialogFragment extends DialogFragment {
     private String photoPath;
 
     private TextView textViewResult;
-    private TextInputEditText titleEditText;
     private TextInputEditText commentEditText;
 
     public GalleryDialogFragment() {
@@ -52,7 +51,6 @@ public class GalleryDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_gallery_dialog, (ViewGroup) getView());
         builder.setView(view);
 
-        titleEditText = view.findViewById(R.id.title_text);
         commentEditText = view.findViewById(R.id.photo_comment_text);
         ImageView imageView = view.findViewById(R.id.imageViewTemp);
         imageView.setImageDrawable(Drawable.createFromPath(photoPath));
@@ -71,7 +69,7 @@ public class GalleryDialogFragment extends DialogFragment {
 
         Button buttonUpload = view.findViewById(R.id.button_upload);
         buttonUpload.setOnClickListener(lambdaView -> {
-            POIArgs poiArgs = new POIArgs(titleEditText.getText().toString(), photoPath, commentEditText.getText().toString());
+            POIArgs poiArgs = new POIArgs("title", photoPath, commentEditText.getText().toString());
             mViewModel.upload(poiArgs);
         });
 
