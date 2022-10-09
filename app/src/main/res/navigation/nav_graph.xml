@@ -57,4 +57,8 @@
             android:name="filePath"
             app:argType="string" />
     </dialog>
+    <fragment
+        android:id="@+id/pureCompose"
+        android:name="yf3.map_info.PureCompose"
+        android:label="PureCompose" />
 </navigation>

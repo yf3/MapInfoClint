@@ -47,7 +47,7 @@ class AlbumDialogFragment: DialogFragment() {
     @Composable
     @Preview
     fun HelloContent() {
-        Column() {
+        Column {
             var name by remember { mutableStateOf("") }
             TextField(
                 value = name,
