@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.fragment.app.Fragment
 
 class PureCompose: Fragment() {
@@ -31,37 +29,19 @@ class PureCompose: Fragment() {
 
 @Composable
 fun OpenDialog() {
-    Dialog(onDismissRequest = { /*TODO*/ }) {
-        Text("Enough")
-    }
-}
-
-@Composable
-fun OpenAlert() {
     val openDialog = remember { mutableStateOf(false)  }
-    AlertDialog(
-        onDismissRequest = { openDialog.value = false },
-        confirmButton = {
-            Button(
-
-                onClick = {
-                    openDialog.value = false
-                }) {
-                Text("This is the Confirm Button")
+    Dialog(onDismissRequest = { /*TODO*/ }, properties = DialogProperties(dismissOnBackPress = true)) {
+        Column {
+            var name by remember { mutableStateOf("") }
+            Text("Enough")
+            TextField(
+                value = name,
+                onValueChange = { name = it },
+                label = { Text("Name") }
+            )
+            Button(onClick = { openDialog.value = false }) {
+                Text("Dismiss")
             }
-        },
-        dismissButton = {
-            Button(
-
-                onClick = {
-                    openDialog.value = false
-                }) {
-                Text("This is the dismiss Button")
-            }
-        })
-}
-
-@Composable
-fun Hello() {
-    Text("Hello")
+        }
+    }
 }

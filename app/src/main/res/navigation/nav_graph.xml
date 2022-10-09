@@ -29,7 +29,7 @@
             app:destination="@id/galleryDialogFragment" />
         <action
             android:id="@+id/photo_detail_action"
-            app:destination="@id/albumDialogFragment" />
+            app:destination="@id/viewPhotoFragment" />
     </fragment>
     <dialog
         android:id="@+id/galleryDialogFragment"
@@ -49,14 +49,14 @@
         android:name="yf3.map_info.MapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" />
-    <dialog
-        android:id="@+id/albumDialogFragment"
-        android:name="yf3.map_info.AlbumDialogFragment"
-        android:label="AlbumDialogFragment">
+    <fragment
+        android:id="@+id/viewPhotoFragment"
+        android:name="yf3.map_info.ViewPhotoFragment"
+        android:label="ViewPhotoFragment">
         <argument
             android:name="filePath"
             app:argType="string" />
-    </dialog>
+    </fragment>
     <fragment
         android:id="@+id/pureCompose"
         android:name="yf3.map_info.PureCompose"
