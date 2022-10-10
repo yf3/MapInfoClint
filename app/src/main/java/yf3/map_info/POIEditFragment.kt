@@ -11,6 +11,7 @@ import android.widget.AutoCompleteTextView
 class POIEditFragment : Fragment() {
 
     private var attachmentPath: String? = null
+    // TODO: Location
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

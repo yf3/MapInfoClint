@@ -7,7 +7,7 @@
 
     <string name="title_here">Title</string>
     <string name="select_type_here">Type</string>
-    <string name="button_upload_text">Upload Image</string>
+    <string name="button_upload_text">Upload</string>
     <string name="button_cancel_text">Cancel</string>
     <string name="button_save_text">Save</string>
     <string name="tag_temp1_name">選項1</string>

@@ -93,12 +93,6 @@
                 android:text="@string/button_upload_text"
                 android:textSize="18sp" />
 
-            <View
-                android:id="@+id/divider"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.1"
-                android:background="?android:attr/listDivider" />
             <Button
                 android:id="@+id/button_cancel"
                 style="?attr/buttonBarButtonStyle"
