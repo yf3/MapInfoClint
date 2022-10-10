@@ -25,13 +25,14 @@ public class LocationParser {
     }
 
     public static class LongLatPair {
-        double longitude;
-        double latitude;
+        final double longitude;
+        final double latitude;
         public LongLatPair(double longitude, double latitude) {
             this.longitude = longitude;
             this.latitude = latitude;
         }
 
+        // TODO: remove or make members private
         public double getLongitude() {
             return longitude;
         }

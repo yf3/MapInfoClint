@@ -6,12 +6,28 @@ import androidx.lifecycle.ViewModel;
 
 public class POIEditorViewModel extends ViewModel {
 
-    private POIRepository poiRepository;
+    private final POIRepository poiRepository;
     private MutableLiveData<String> uploadStatus;
+
+    private double longitude;
+    private double latitude;
+    private boolean isLocationInit = false;
 
     public POIEditorViewModel() {
         poiRepository = new POIRepository();
         uploadStatus = new MutableLiveData<>();
+    }
+
+    public double getLongitude() { return longitude; }
+    public double getLatitude() { return latitude; }
+
+    public void initPhotoLocation(String path) {
+        if (false == isLocationInit) {
+            LocationParser.LongLatPair longLatPair = PhotoModel.getLocationPair(path);
+            longitude = longLatPair.longitude;
+            latitude = longLatPair.latitude;
+            isLocationInit = true;
+        }
     }
 
     public void upload(POIArgs poiArgs) {
