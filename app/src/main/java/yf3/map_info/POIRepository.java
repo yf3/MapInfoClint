@@ -3,6 +3,7 @@ package yf3.map_info;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -11,6 +12,27 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class POIRepository {
+
+    public void getTypes(TypeRequestListener typeRequestListener) {
+        Retrofit retrofit = NetworkClient.getRetrofitClient();
+        GetPOITypes getTypeAPI = retrofit.create(GetPOITypes.class);
+
+        Call<List<POITypeDataPair>> call = getTypeAPI.getAllPOITypes();
+
+        call.enqueue(new Callback<List<POITypeDataPair>>() {
+            @Override
+            public void onResponse(Call<List<POITypeDataPair>> call, Response<List<POITypeDataPair>> response) {
+                if (200 == response.code()) {
+                    typeRequestListener.onSuccess(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<POITypeDataPair>> call, Throwable t) {
+                typeRequestListener.onFailure();
+            }
+        });
+    }
 
     public void uploadPOI(POIArgs poiArgs, UploadListener uploadListener) {
         Retrofit retrofit = NetworkClient.getRetrofitClient();
@@ -47,6 +69,11 @@ public class POIRepository {
                 uploadListener.onFailure();
             }
         });
+    }
+
+    interface TypeRequestListener {
+        void onSuccess(List<POITypeDataPair> poiTypes);
+        void onFailure();
     }
 
     interface UploadListener {

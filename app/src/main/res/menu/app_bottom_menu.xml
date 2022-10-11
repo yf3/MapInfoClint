@@ -12,11 +12,6 @@
         android:title="@string/title_maps" />
 
     <item
-        android:id="@+id/pureCompose"
-        android:icon="@android:drawable/ic_dialog_alert"
-        android:title="@string/title_maps" />
-
-    <item
         android:id="@+id/cameraActivity"
         android:icon="@android:drawable/ic_menu_camera"
         android:title="@string/title_camera" />
