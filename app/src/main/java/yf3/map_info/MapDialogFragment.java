@@ -23,7 +23,7 @@ import com.mapbox.mapboxsdk.plugins.annotation.Symbol;
 import com.mapbox.mapboxsdk.plugins.annotation.SymbolManager;
 import com.mapbox.mapboxsdk.plugins.annotation.SymbolOptions;
 
-
+@Deprecated
 public class MapDialogFragment extends DialogFragment {
     private static final String ARG_LATITUDE = "mLatitude";
     private static final String ARG_LONGITUDE = "mLongitude";
