@@ -7,9 +7,10 @@
 
     <string name="title_here">Title</string>
     <string name="select_type_here">Type</string>
-    <string name="button_upload_text">Upload</string>
-    <string name="button_cancel_text">Cancel</string>
+    <string name="button_upload_text">Submit</string>
+    <string name="button_cancel_text">Return</string>
     <string name="button_save_text">Save</string>
+    <string name="dialog_ok">OK</string>
     <string name="tag_temp1_name">選項1</string>
     <string name="tag_temp2_name">選項2</string>
     <string name="title_hint">輸入標題</string>

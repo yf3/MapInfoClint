@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
@@ -64,6 +65,10 @@ class POIEditFragment : Fragment() {
                 progress?.visibility = View.GONE
                 submitBtn?.isEnabled = true
                 returnBtn?.isEnabled = true
+                MaterialAlertDialogBuilder(requireContext(), R.style.MaterialAlertDialog_Material3)
+                    .setMessage(it)
+                    .setPositiveButton(R.string.dialog_ok, null)
+                    .show()
             }
 
             val typeID = selectedType?.id ?: Configs.UNSORTED_ID
