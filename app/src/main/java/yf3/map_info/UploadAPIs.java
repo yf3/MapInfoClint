@@ -16,5 +16,6 @@ public interface UploadAPIs {
                                    @Part MultipartBody.Part attachment,
                                    @Part("longitude") Double longitude,
                                    @Part("latitude") Double latitude,
+                                   @Part("poi_type") Integer typeID,
                                    @Part("comment") RequestBody comment); // String Request Body
 }

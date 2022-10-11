@@ -5,6 +5,15 @@
     android:layout_height="match_parent"
     tools:context=".POIEditFragment">
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/uploadProgress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ScrollView
         android:id="@+id/scrollContainer"
         android:layout_width="match_parent"
@@ -53,12 +62,12 @@
                 app:endIconDrawable="@android:drawable/arrow_down_float"
                 app:endIconMode="dropdown_menu">
 
-                <android.widget.AutoCompleteTextView
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/type_selector"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/poi_type_hint"
-                    android:inputType="textAutoComplete"
+                    android:inputType="none"
                     android:singleLine="true"
                     android:textColorHint="#8D6E63" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -78,9 +87,7 @@
                         android:id="@+id/location_text"
                         style="@style/Widget.MaterialComponents.TextView"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" >
-
-                    </TextView>
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>

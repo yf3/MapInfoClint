@@ -45,6 +45,7 @@ public class POIRepository {
                 poi.mImagePart,
                 poi.mLongitude,
                 poi.mLatitude,
+                poi.mTypeID,
                 poi.mCommentStringBody);
 
         call.enqueue(new Callback<ResponseBody>() {

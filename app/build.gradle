@@ -127,5 +127,4 @@ dependencies {
     implementation ("com.mapbox.maps:android:$mapbox_version") {
         exclude group: 'group_name', module: 'module_name'
     }
-//    implementation "com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v9:0.8.0"
 }

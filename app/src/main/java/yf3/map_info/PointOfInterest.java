@@ -8,6 +8,7 @@ import okhttp3.RequestBody;
 
 public class PointOfInterest {
     public final RequestBody mTitleStringBody;
+    public final int mTypeID;
     public final MultipartBody.Part mImagePart;
     public final double mLongitude;
     public final double mLatitude;
@@ -15,6 +16,7 @@ public class PointOfInterest {
 
     public PointOfInterest(POIArgs poiArgs) {
         mTitleStringBody = getStringBody(poiArgs.title);
+        mTypeID = poiArgs.typeID;
         mImagePart = getMediaPart(poiArgs.filePath);
         LocationParser.LongLatPair longLatPair = PhotoModel.getLocationPair(poiArgs.filePath);
         mLongitude = longLatPair.getLongitude();

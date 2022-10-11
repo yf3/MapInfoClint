@@ -48,14 +48,14 @@ public class POIEditorViewModel extends ViewModel {
             public void onFailure() {
                 Log.e("POI VM", "failed getting POI types");
                 List<POITypeDataPair> notFoundList = new ArrayList<>();
-                notFoundList.add(new POITypeDataPair(0, "Unsorted"));
+                notFoundList.add(new POITypeDataPair(Configs.UNSORTED_ID, "Unsorted"));
                 poiTypes.setValue(notFoundList);
             }
         });
     }
 
     public void upload(POIArgs poiArgs) {
-        uploadStatus.setValue("Uploading...");
+//        uploadStatus.setValue("Uploading...");
         poiRepository.uploadPOI(poiArgs, new POIRepository.UploadListener() {
             @Override
             public void onSuccess() {
