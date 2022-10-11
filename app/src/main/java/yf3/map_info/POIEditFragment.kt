@@ -44,6 +44,7 @@ class POIEditFragment : Fragment() {
         locationText.text = viewModel?.let { String.format("(%.3f, %.3f)", it.longitude, it.latitude) }
 
         val submitBtn: Button = view.findViewById(R.id.button_upload)
+
     }
 
     private fun setTypeSelector(typeSelector: AutoCompleteTextView?) {

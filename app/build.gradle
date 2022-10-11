@@ -7,7 +7,7 @@ plugins {
 android {
     compileSdkVersion 32
     defaultConfig {
-        applicationId "csie.ndhu.mapInfo"
+        applicationId "yf3.map_info"
         minSdkVersion 21
         targetSdkVersion 31
         versionCode 1
@@ -123,9 +123,9 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-location:20.0.0'
 
-    def mapbox_version = "9.7.1"
-    implementation ("com.mapbox.mapboxsdk:mapbox-android-sdk:$mapbox_version") {
+    def mapbox_version = "10.8.1"
+    implementation ("com.mapbox.maps:android:$mapbox_version") {
         exclude group: 'group_name', module: 'module_name'
     }
-    implementation "com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v9:0.8.0"
+//    implementation "com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v9:0.8.0"
 }

@@ -58,7 +58,7 @@ public class GalleryDialogFragment extends DialogFragment {
         final Observer<String> uploadObserver = uploadStatus -> textViewResult.setText(uploadStatus);
         mViewModel.getUploadStatus().observe(this, uploadObserver);
 
-        ImageButton checkLocationButton = view.findViewById(R.id.imageButton);
+//        ImageButton checkLocationButton = view.findViewById(R.id.imageButton);
 //        checkLocationButton.setOnClickListener(lambdaView -> {
 //            LocationParser.LongLatPair longLatPair = PhotoModel.getLocationPair(photoPath);
 //            MapDialogFragment mapDialogFragment = MapDialogFragment.newInstance(longLatPair.getLatitude(), longLatPair.getLongitude());
