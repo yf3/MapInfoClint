@@ -82,7 +82,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:gravity="center_vertical"
                     android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/locationIcon"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginRight="16dp"
+                        android:contentDescription="locationIcon"
+                        app:srcCompat="@android:drawable/ic_menu_mylocation" />
+
                     <TextView
                         android:id="@+id/location_text"
                         style="@style/Widget.MaterialComponents.TextView"

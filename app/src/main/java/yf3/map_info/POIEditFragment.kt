@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -50,6 +51,13 @@ class POIEditFragment : Fragment() {
 
         val locationText: TextView = view.findViewById(R.id.location_text)
         locationText.text = viewModel?.let { String.format("(%.3f, %.3f)", it.longitude, it.latitude) }
+
+        val locationIcon: ImageView? = view.findViewById(R.id.locationIcon)
+        locationIcon?.setOnClickListener {
+            findNavController().navigate(POIEditFragmentDirections.actionPOIEditFragmentToLocationDialogFragment(
+                viewModel!!.longitude.toFloat(), viewModel!!.latitude.toFloat()
+            ))
+        }
 
         val descriptionEditText: TextInputEditText? = view.findViewById(R.id.description_input)
 
