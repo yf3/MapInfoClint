@@ -1,15 +1,13 @@
 package yf3.map_info
 
 import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources.getDrawable
+import androidx.core.graphics.scale
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mapbox.geojson.Point
@@ -37,7 +35,7 @@ class LocationDialogFragment : BottomSheetDialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_location_dialog_list_dialog, container, false)
+        return inflater.inflate(R.layout.fragment_location_dialog, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,11 +44,14 @@ class LocationDialogFragment : BottomSheetDialogFragment() {
             .center(Point.fromLngLat(mLong!!, mLat!!))
             .zoom(15.0)
             .build()
+
+        var markerBmp:Bitmap = BitmapFactory.decodeResource(resources, R.drawable.red_marker)
+        markerBmp.scale(markerBmp.width/2, markerBmp.height/2).also { markerBmp = it }
         val annotationApi = mapView?.annotations
-        val pointAnnotationManager = annotationApi?.createPointAnnotationManager(mapView!!)
+        val pointAnnotationManager = annotationApi?.createPointAnnotationManager()
         val pointAnnotationOptions: PointAnnotationOptions = PointAnnotationOptions()
             .withPoint(Point.fromLngLat(mLong!!, mLat!!))
-            .withIconImage(convertDrawableToBitmap(getDrawable(requireContext(), R.drawable.red_marker))!!)
+            .withIconImage(markerBmp)
         pointAnnotationManager?.create(pointAnnotationOptions)
 
         mapView?.getMapboxMap()?.setCamera(cameraInitOptions)
@@ -62,23 +63,4 @@ class LocationDialogFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun convertDrawableToBitmap(sourceDrawable: Drawable?): Bitmap? {
-        if (sourceDrawable == null) {
-            return null
-        }
-        return if (sourceDrawable is BitmapDrawable) {
-            sourceDrawable.bitmap
-        } else {
-            val constantState = sourceDrawable.constantState ?: return null
-            val drawable = constantState.newDrawable().mutate()
-            val bitmap: Bitmap = Bitmap.createBitmap(
-                drawable.intrinsicWidth, drawable.intrinsicHeight,
-                Bitmap.Config.ARGB_8888
-            )
-            val canvas = Canvas(bitmap)
-            drawable.setBounds(0, 0, canvas.width, canvas.height)
-            drawable.draw(canvas)
-            bitmap
-        }
-    }
 }

@@ -18,9 +18,11 @@
         android:id="@+id/backFAB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:clickable="true"
+        android:focusable="false"
         app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
 </FrameLayout>

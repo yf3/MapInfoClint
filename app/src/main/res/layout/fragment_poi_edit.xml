@@ -89,8 +89,8 @@
                         android:id="@+id/locationIcon"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
-                        android:layout_marginRight="16dp"
-                        android:contentDescription="locationIcon"
+                        android:layout_marginEnd="16dp"
+                        android:contentDescription="@string/photo_location_icon"
                         app:srcCompat="@android:drawable/ic_menu_mylocation" />
 
                     <TextView
