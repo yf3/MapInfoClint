@@ -9,19 +9,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.graphics.scale
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
+import yf3.map_info.databinding.FragmentLocationDialogBinding
 
 
 class LocationDialogFragment : BottomSheetDialogFragment() {
 
-    private var mapView: MapView? = null
+    private var _binding: FragmentLocationDialogBinding? = null
+    private val binding get() = _binding!!
     private var mLong: Double? = null
     private var mLat: Double? = null
 
@@ -35,11 +35,11 @@ class LocationDialogFragment : BottomSheetDialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_location_dialog, container, false)
+        _binding = FragmentLocationDialogBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        mapView = view.findViewById(R.id.mapView)
         val cameraInitOptions = CameraOptions.Builder()
             .center(Point.fromLngLat(mLong!!, mLat!!))
             .zoom(15.0)
@@ -47,20 +47,23 @@ class LocationDialogFragment : BottomSheetDialogFragment() {
 
         var markerBmp:Bitmap = BitmapFactory.decodeResource(resources, R.drawable.red_marker)
         markerBmp.scale(markerBmp.width/2, markerBmp.height/2).also { markerBmp = it }
-        val annotationApi = mapView?.annotations
+        val annotationApi = binding.mapView.annotations
         val pointAnnotationManager = annotationApi?.createPointAnnotationManager()
         val pointAnnotationOptions: PointAnnotationOptions = PointAnnotationOptions()
             .withPoint(Point.fromLngLat(mLong!!, mLat!!))
             .withIconImage(markerBmp)
         pointAnnotationManager?.create(pointAnnotationOptions)
 
-        mapView?.getMapboxMap()?.setCamera(cameraInitOptions)
-        mapView?.getMapboxMap()?.loadStyleUri(Style.MAPBOX_STREETS)
+        binding.mapView.getMapboxMap().setCamera(cameraInitOptions)
+        binding.mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS)
 
-        val backFab: FloatingActionButton? = view.findViewById(R.id.backFAB)
-        backFab?.setOnClickListener {
+        binding.backFAB.setOnClickListener {
             findNavController().popBackStack()
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

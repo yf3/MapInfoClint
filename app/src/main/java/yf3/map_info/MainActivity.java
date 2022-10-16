@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private NavController mNavController;
 
     private final NavigationBarView.OnItemSelectedListener mOnItemSelectedListener = (item -> {
+        // TODO: arguments
         NavigationUI.onNavDestinationSelected(item, mNavController);
         return true;
     });
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        assert navHostFragment != null;
         mNavController = navHostFragment.getNavController();
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
         bottomNav.setOnItemSelectedListener(mOnItemSelectedListener);

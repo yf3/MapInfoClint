@@ -7,12 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
-import com.mapbox.maps.MapView
 import com.mapbox.maps.Style
+import yf3.map_info.databinding.FragmentMapBinding
 
 class MapFragment : Fragment() {
 
-    private var mapView: MapView? = null
+    private var _binding:FragmentMapBinding? = null
+    private val binding get() = _binding!!
+    private var mLong: Double = 121.51797666246986 // Test Purpose
+    private var mLat: Double = 25.027184623416378 // Test Purpose
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,17 +25,17 @@ class MapFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_map, container, false)
+        _binding = FragmentMapBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        mapView = view.findViewById(R.id.mapView)
         val cameraInitOptions = CameraOptions.Builder()
-            .center(Point.fromLngLat(121.51797666246986, 25.027184623416378))
+            .center(Point.fromLngLat(mLong, mLat))
             .zoom(15.0)
             .build()
-        mapView?.getMapboxMap()?.setCamera(cameraInitOptions)
-        mapView?.getMapboxMap()?.loadStyleUri(Style.MAPBOX_STREETS)
+        binding.mapView.getMapboxMap().setCamera(cameraInitOptions)
+        binding.mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS)
     }
 
 }
