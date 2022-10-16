@@ -5,14 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import yf3.map_info.databinding.FragmentViewPhotoBinding
 
 class ViewPhotoFragment: Fragment() {
 
+    private var _binding: FragmentViewPhotoBinding? = null
+    private val binding get() = _binding!!
     private var photoPath: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,16 +27,20 @@ class ViewPhotoFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_view_photo, container,false)
+        _binding = FragmentViewPhotoBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val imageView: ImageView? = view.findViewById(R.id.mainImageView)
-        imageView?.setImageDrawable(Drawable.createFromPath(photoPath))
-        val uploadFAB: FloatingActionButton? = view.findViewById(R.id.uploadFAB)
-        uploadFAB?.setOnClickListener {
+        binding.mainImageView.setImageDrawable(Drawable.createFromPath(photoPath))
+        binding.uploadFAB.setOnClickListener {
             Navigation.findNavController(it).navigate(ViewPhotoFragmentDirections.actionViewPhotoFragmentToPOIEditFragment(photoPath))
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }
