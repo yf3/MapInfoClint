@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import yf3.map_info.databinding.GalleryFragmentBinding;
 
 import android.util.Log;
@@ -31,15 +32,17 @@ public class GalleryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.galleryGridView.setAdapter(new ImageAdapter(getAllShownImagesPath()));
+        binding.galleryGridView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        // TODO: adjust LayoutManager
 
-        binding.galleryGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View view, final int position, long id) {
-                Log.i("onItemClick", String.format("#%d Clicked!", position));
-                final String filePath = (String) arg0.getAdapter().getItem(position);
-                Navigation.findNavController(view).navigate(GalleryFragmentDirections.photoDetailAction(filePath));
-            }
-        });
+//        binding.galleryGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> arg0, View view, final int position, long id) {
+//                Log.i("onItemClick", String.format("#%d Clicked!", position));
+//                final String filePath = (String) arg0.getAdapter().getItem(position);
+//                Navigation.findNavController(view).navigate(GalleryFragmentDirections.photoDetailAction(filePath));
+//            }
+//        });
     }
 
     @Override
