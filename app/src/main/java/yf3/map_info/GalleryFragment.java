@@ -34,15 +34,6 @@ public class GalleryFragment extends Fragment {
         binding.galleryGridView.setAdapter(new ImageAdapter(getAllShownImagesPath()));
         binding.galleryGridView.setLayoutManager(new LinearLayoutManager(requireContext()));
         // TODO: adjust LayoutManager
-
-//        binding.galleryGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> arg0, View view, final int position, long id) {
-//                Log.i("onItemClick", String.format("#%d Clicked!", position));
-//                final String filePath = (String) arg0.getAdapter().getItem(position);
-//                Navigation.findNavController(view).navigate(GalleryFragmentDirections.photoDetailAction(filePath));
-//            }
-//        });
     }
 
     @Override
