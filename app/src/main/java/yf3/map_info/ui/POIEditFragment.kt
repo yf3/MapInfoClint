@@ -18,10 +18,13 @@ import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
 import yf3.map_info.*
 import yf3.map_info.data.POITypeDataPair
+import yf3.map_info.databinding.FragmentPoiEditBinding
 import yf3.map_info.util.POIArgs
 
 class POIEditFragment : Fragment() {
 
+    private var _binding: FragmentPoiEditBinding? = null
+    private val binding get() = _binding!!
     private var viewModel: POIEditorViewModel? = null
     private var attachmentPath: String? = null
     private var selectedType: POITypeDataPair? = null
@@ -41,22 +44,18 @@ class POIEditFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_poi_edit, container, false)
+        _binding = FragmentPoiEditBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val progress: LinearProgressIndicator? = view.findViewById(R.id.uploadProgress)
-        progress?.visibility = View.INVISIBLE
-        val titleEditText: TextInputEditText? = view.findViewById(R.id.title_input)
+        binding.uploadProgress.visibility = View.INVISIBLE
 
-        val typeSelector: MaterialAutoCompleteTextView? = view.findViewById(R.id.type_selector)
-        setTypeSelector(typeSelector)
+        setTypeSelector(binding.typeSelector)
 
-        val locationText: TextView = view.findViewById(R.id.location_text)
-        locationText.text = viewModel?.let { String.format("(%.3f, %.3f)", it.longitude, it.latitude) }
+        binding.locationText.text = viewModel?.let { String.format("(%.3f, %.3f)", it.longitude, it.latitude) }
 
-        val locationIcon: ImageView? = view.findViewById(R.id.locationIcon)
-        locationIcon?.setOnClickListener {
+        binding.locationIcon.setOnClickListener {
             findNavController().navigate(
                 POIEditFragmentDirections.actionPOIEditFragmentToLocationDialogFragment(
                     viewModel!!.longitude.toFloat(), viewModel!!.latitude.toFloat()
@@ -64,20 +63,15 @@ class POIEditFragment : Fragment() {
             )
         }
 
-        val descriptionEditText: TextInputEditText? = view.findViewById(R.id.description_input)
-
-        val submitBtn: Button = view.findViewById(R.id.button_upload)
-        val returnBtn: Button = view.findViewById(R.id.button_cancel)
-
-        submitBtn.setOnClickListener {
-            progress?.visibility = View.VISIBLE
-            submitBtn?.isEnabled = false
-            returnBtn?.isEnabled = false
+        binding.buttonUpload.setOnClickListener {
+            binding.uploadProgress.visibility = View.VISIBLE
+            binding.buttonUpload.isEnabled = false
+            binding.buttonCancel.isEnabled = false
 
             viewModel!!.uploadStatus.observe(viewLifecycleOwner) {
-                progress?.visibility = View.GONE
-                submitBtn?.isEnabled = true
-                returnBtn?.isEnabled = true
+                binding.uploadProgress.visibility = View.GONE
+                binding.buttonUpload.isEnabled = true
+                binding.buttonCancel.isEnabled = true
                 MaterialAlertDialogBuilder(requireContext(), R.style.MaterialAlertDialog_Material3)
                     .setMessage(it)
                     .setPositiveButton(R.string.dialog_ok, null)
@@ -87,16 +81,22 @@ class POIEditFragment : Fragment() {
             val typeID = selectedType?.id ?: Configs.UNSORTED_ID
             viewModel!!.upload(
                 POIArgs(
-                    titleEditText?.text.toString(),
+                    binding.titleInput.text.toString(),
                     typeID,
-                    attachmentPath, descriptionEditText?.text.toString()
+                    attachmentPath,
+                    binding.descriptionInput.text.toString()
                 )
             )
         }
 
-        returnBtn.setOnClickListener {
+        binding.buttonCancel.setOnClickListener {
             findNavController().popBackStack()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun setTypeSelector(typeSelector: AutoCompleteTextView?) {
