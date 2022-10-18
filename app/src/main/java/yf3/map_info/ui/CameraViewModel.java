@@ -1,4 +1,4 @@
-package yf3.map_info;
+package yf3.map_info.ui;
 
 import android.app.Application;
 import android.location.Location;
@@ -14,6 +14,9 @@ import androidx.camera.core.ImageCaptureException;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import yf3.map_info.data.LocationListener;
+import yf3.map_info.data.LocationManager;
+import yf3.map_info.util.PhotoModel;
 
 public class CameraViewModel extends AndroidViewModel implements LocationListener {
     private LocationManager locationRepository = null;

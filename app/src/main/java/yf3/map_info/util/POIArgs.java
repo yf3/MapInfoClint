@@ -1,4 +1,4 @@
-package yf3.map_info;
+package yf3.map_info.util;
 
 public class POIArgs {
     public final String title;
@@ -6,7 +6,7 @@ public class POIArgs {
     public final String filePath;
     public final String comment;
 
-    POIArgs(String title, int typeID, String filePath, String comment) {
+    public POIArgs(String title, int typeID, String filePath, String comment) {
         this.title = title;
         this.typeID = typeID;
         this.filePath = filePath;

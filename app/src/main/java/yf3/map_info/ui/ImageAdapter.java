@@ -1,4 +1,4 @@
-package yf3.map_info;
+package yf3.map_info.ui;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
+import yf3.map_info.R;
 import yf3.map_info.databinding.AlbumItemBinding;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {

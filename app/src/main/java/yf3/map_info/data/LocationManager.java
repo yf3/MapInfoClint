@@ -1,4 +1,4 @@
-package yf3.map_info;
+package yf3.map_info.data;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

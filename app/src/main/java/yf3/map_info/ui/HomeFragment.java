@@ -1,8 +1,9 @@
-package yf3.map_info;
+package yf3.map_info.ui;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import yf3.map_info.R;
 
 import android.view.LayoutInflater;
 import android.view.View;

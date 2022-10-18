@@ -2,6 +2,8 @@ package yf3.map_info;
 
 import org.junit.Test;
 
+import yf3.map_info.data.LocationParser;
+
 import static org.junit.Assert.*;
 
 public class LocationParserTest {

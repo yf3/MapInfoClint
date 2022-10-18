@@ -1,4 +1,4 @@
-package yf3.map_info
+package yf3.map_info.ui
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -15,6 +15,7 @@ import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
+import yf3.map_info.R
 import yf3.map_info.databinding.FragmentLocationDialogBinding
 
 
@@ -48,11 +49,11 @@ class LocationDialogFragment : BottomSheetDialogFragment() {
         var markerBmp:Bitmap = BitmapFactory.decodeResource(resources, R.drawable.red_marker)
         markerBmp.scale(markerBmp.width/2, markerBmp.height/2).also { markerBmp = it }
         val annotationApi = binding.mapView.annotations
-        val pointAnnotationManager = annotationApi?.createPointAnnotationManager()
+        val pointAnnotationManager = annotationApi.createPointAnnotationManager()
         val pointAnnotationOptions: PointAnnotationOptions = PointAnnotationOptions()
             .withPoint(Point.fromLngLat(mLong!!, mLat!!))
             .withIconImage(markerBmp)
-        pointAnnotationManager?.create(pointAnnotationOptions)
+        pointAnnotationManager.create(pointAnnotationOptions)
 
         binding.mapView.getMapboxMap().setCamera(cameraInitOptions)
         binding.mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS)

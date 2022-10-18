@@ -1,4 +1,4 @@
-package yf3.map_info;
+package yf3.map_info.ui;
 
 import android.util.Log;
 
@@ -8,6 +8,12 @@ import java.util.List;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import yf3.map_info.Configs;
+import yf3.map_info.data.LocationParser;
+import yf3.map_info.util.POIArgs;
+import yf3.map_info.data.POIRepository;
+import yf3.map_info.data.POITypeDataPair;
+import yf3.map_info.util.PhotoModel;
 
 public class POIEditorViewModel extends ViewModel {
 

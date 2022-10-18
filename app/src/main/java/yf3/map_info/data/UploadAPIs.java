@@ -1,4 +1,4 @@
-package yf3.map_info;
+package yf3.map_info.data;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;

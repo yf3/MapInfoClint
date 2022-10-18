@@ -1,4 +1,4 @@
-package yf3.map_info;
+package yf3.map_info.data;
 
 import android.util.Log;
 
@@ -10,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import yf3.map_info.util.POIArgs;
 
 public class POIRepository {
 
@@ -72,12 +73,12 @@ public class POIRepository {
         });
     }
 
-    interface TypeRequestListener {
+    public interface TypeRequestListener {
         void onSuccess(List<POITypeDataPair> poiTypes);
         void onFailure();
     }
 
-    interface UploadListener {
+    public interface UploadListener {
         void onSuccess();
         void onBadRequest();
         void onFailure();

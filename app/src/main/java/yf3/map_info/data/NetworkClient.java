@@ -1,4 +1,4 @@
-package yf3.map_info;
+package yf3.map_info.data;
 
 import java.util.concurrent.TimeUnit;
 
@@ -7,6 +7,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import yf3.map_info.Configs;
 
 public class NetworkClient {
 

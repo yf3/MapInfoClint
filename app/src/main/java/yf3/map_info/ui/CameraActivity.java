@@ -1,4 +1,4 @@
-package yf3.map_info;
+package yf3.map_info.ui;
 
 import android.Manifest;
 import android.content.Context;
@@ -16,6 +16,7 @@ import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import yf3.map_info.R;
 
 import android.os.Bundle;
 import android.util.Log;

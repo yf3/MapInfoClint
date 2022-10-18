@@ -1,4 +1,4 @@
-package yf3.map_info;
+package yf3.map_info.data;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,6 +8,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
+import yf3.map_info.Configs;
 
 public class MessageWS {
     private OkHttpClient client;

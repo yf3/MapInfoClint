@@ -1,4 +1,4 @@
-package yf3.map_info;
+package yf3.map_info.data;
 
 import java.util.Scanner;
 
@@ -25,20 +25,11 @@ public class LocationParser {
     }
 
     public static class LongLatPair {
-        final double longitude;
-        final double latitude;
+        public final double longitude;
+        public final double latitude;
         public LongLatPair(double longitude, double latitude) {
             this.longitude = longitude;
             this.latitude = latitude;
-        }
-
-        // TODO: remove or make members private
-        public double getLongitude() {
-            return longitude;
-        }
-
-        public double getLatitude() {
-            return latitude;
         }
     }
 

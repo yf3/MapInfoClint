@@ -1,4 +1,4 @@
-package yf3.map_info
+package yf3.map_info.ui
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -34,7 +34,11 @@ class ViewPhotoFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.mainImageView.setImageDrawable(Drawable.createFromPath(photoPath))
         binding.uploadFAB.setOnClickListener {
-            Navigation.findNavController(it).navigate(ViewPhotoFragmentDirections.actionViewPhotoFragmentToPOIEditFragment(photoPath))
+            Navigation.findNavController(it).navigate(
+                ViewPhotoFragmentDirections.actionViewPhotoFragmentToPOIEditFragment(
+                    photoPath
+                )
+            )
         }
     }
 

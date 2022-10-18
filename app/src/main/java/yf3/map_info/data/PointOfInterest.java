@@ -1,10 +1,12 @@
-package yf3.map_info;
+package yf3.map_info.data;
 
 import java.io.File;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import yf3.map_info.util.POIArgs;
+import yf3.map_info.util.PhotoModel;
 
 public class PointOfInterest {
     public final RequestBody mTitleStringBody;
@@ -19,8 +21,8 @@ public class PointOfInterest {
         mTypeID = poiArgs.typeID;
         mImagePart = getMediaPart(poiArgs.filePath);
         LocationParser.LongLatPair longLatPair = PhotoModel.getLocationPair(poiArgs.filePath);
-        mLongitude = longLatPair.getLongitude();
-        mLatitude = longLatPair.getLatitude();
+        mLongitude = longLatPair.longitude;
+        mLatitude = longLatPair.latitude;
         mCommentStringBody = getStringBody(poiArgs.comment);
     }
 

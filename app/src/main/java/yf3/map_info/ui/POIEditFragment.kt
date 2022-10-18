@@ -1,4 +1,4 @@
-package yf3.map_info
+package yf3.map_info.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -16,6 +16,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
+import yf3.map_info.*
+import yf3.map_info.data.POITypeDataPair
+import yf3.map_info.util.POIArgs
 
 class POIEditFragment : Fragment() {
 
@@ -54,9 +57,11 @@ class POIEditFragment : Fragment() {
 
         val locationIcon: ImageView? = view.findViewById(R.id.locationIcon)
         locationIcon?.setOnClickListener {
-            findNavController().navigate(POIEditFragmentDirections.actionPOIEditFragmentToLocationDialogFragment(
-                viewModel!!.longitude.toFloat(), viewModel!!.latitude.toFloat()
-            ))
+            findNavController().navigate(
+                POIEditFragmentDirections.actionPOIEditFragmentToLocationDialogFragment(
+                    viewModel!!.longitude.toFloat(), viewModel!!.latitude.toFloat()
+                )
+            )
         }
 
         val descriptionEditText: TextInputEditText? = view.findViewById(R.id.description_input)
@@ -80,10 +85,13 @@ class POIEditFragment : Fragment() {
             }
 
             val typeID = selectedType?.id ?: Configs.UNSORTED_ID
-            viewModel!!.upload(POIArgs(
-                titleEditText?.text.toString(),
-                typeID,
-                attachmentPath, descriptionEditText?.text.toString()))
+            viewModel!!.upload(
+                POIArgs(
+                    titleEditText?.text.toString(),
+                    typeID,
+                    attachmentPath, descriptionEditText?.text.toString()
+                )
+            )
         }
 
         returnBtn.setOnClickListener {

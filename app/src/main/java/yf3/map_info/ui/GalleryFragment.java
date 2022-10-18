@@ -1,19 +1,18 @@
-package yf3.map_info;
+package yf3.map_info.ui;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import yf3.map_info.util.PhotoModel;
 import yf3.map_info.databinding.GalleryFragmentBinding;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+
 import java.io.File;
 import java.util.ArrayList;
 

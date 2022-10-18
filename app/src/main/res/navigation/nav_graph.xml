@@ -6,7 +6,7 @@
     app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/homeFragment"
-        android:name="yf3.map_info.HomeFragment"
+        android:name="yf3.map_info.ui.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/galleryFragment"
-        android:name="yf3.map_info.GalleryFragment"
+        android:name="yf3.map_info.ui.GalleryFragment"
         android:label="gallery_fragment"
         tools:layout="@layout/gallery_fragment" >
         <action
@@ -41,17 +41,17 @@
     </dialog>
     <activity
         android:id="@+id/cameraActivity"
-        android:name="yf3.map_info.CameraActivity"
+        android:name="yf3.map_info.ui.CameraActivity"
         android:label="activity_camera"
         tools:layout="@layout/activity_camera" />
     <fragment
         android:id="@+id/mapFragment"
-        android:name="yf3.map_info.MapFragment"
+        android:name="yf3.map_info.ui.MapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" />
     <fragment
         android:id="@+id/viewPhotoFragment"
-        android:name="yf3.map_info.ViewPhotoFragment"
+        android:name="yf3.map_info.ui.ViewPhotoFragment"
         android:label="ViewPhotoFragment">
         <argument
             android:name="filePath"
@@ -66,7 +66,7 @@
         android:label="PureCompose" />
     <fragment
         android:id="@+id/POIEditFragment"
-        android:name="yf3.map_info.POIEditFragment"
+        android:name="yf3.map_info.ui.POIEditFragment"
         android:label="fragment_poi_edit"
         tools:layout="@layout/fragment_poi_edit" >
         <argument
@@ -79,7 +79,7 @@
     </fragment>
     <fragment
         android:id="@+id/locationDialogFragment"
-        android:name="yf3.map_info.LocationDialogFragment"
+        android:name="yf3.map_info.ui.LocationDialogFragment"
         android:label="fragment_location_dialog_list_dialog"
         tools:layout="@layout/fragment_location_dialog" >
         <argument

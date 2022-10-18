@@ -1,4 +1,4 @@
-package yf3.map_info;
+package yf3.map_info.util;
 
 import android.location.Location;
 import android.media.ExifInterface;
@@ -7,6 +7,8 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import yf3.map_info.data.LocationParser;
 
 public class PhotoModel {
     public static final String PHOTO_EXT = ".jpeg";
