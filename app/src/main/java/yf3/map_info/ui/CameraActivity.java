@@ -12,16 +12,14 @@ import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
-import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import yf3.map_info.R;
+import yf3.map_info.databinding.ActivityCameraBinding;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
 import com.google.common.util.concurrent.ListenableFuture;
 
@@ -30,12 +28,12 @@ import java.util.concurrent.ExecutionException;
 
 public class CameraActivity extends AppCompatActivity {
 
+    private ActivityCameraBinding binding;
     private CameraViewModel viewModel;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private androidx.camera.core.Camera camera;
     private ProcessCameraProvider mCameraProvider;
     private ImageCapture imageCapture;
-    private Button captureButton;
 
     final String[] PERMISSIONS = {
             Manifest.permission.CAMERA,
@@ -45,12 +43,12 @@ public class CameraActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_camera_preview);
+        binding = ActivityCameraBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         viewModel = new ViewModelProvider(this).get(CameraViewModel.class);
 
-        captureButton = findViewById(R.id.button_capture);
-        captureButton.setOnClickListener(captureListener);
+        binding.buttonCapture.setOnClickListener(captureListener);
 
         requestPermissions();
     }
@@ -72,8 +70,7 @@ public class CameraActivity extends AppCompatActivity {
 
     private Preview getPreview() {
         Preview preview = new Preview.Builder().build();
-        PreviewView previewView = findViewById(R.id.camera_preview_view);
-        preview.setSurfaceProvider(previewView.getSurfaceProvider());
+        preview.setSurfaceProvider(binding.cameraPreviewView.getSurfaceProvider());
         return preview;
     }
 
@@ -108,7 +105,7 @@ public class CameraActivity extends AppCompatActivity {
     private final View.OnClickListener captureListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            captureButton.setVisibility(View.INVISIBLE);
+            v.setVisibility(View.INVISIBLE);
             Log.i("Camera", "Capture clicked.");
             viewModel.takePhoto(imageCapture);
         }
@@ -116,10 +113,10 @@ public class CameraActivity extends AppCompatActivity {
 
     public void onPhotoLocationFound() {
         // Stop the finding location UI
-        captureButton.setVisibility(View.VISIBLE);
+        binding.buttonCapture.setVisibility(View.VISIBLE);
     }
 
     private boolean checkCameraHardware(Context context) {
-        return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
+        return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
     }
 }

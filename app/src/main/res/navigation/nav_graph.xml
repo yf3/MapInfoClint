@@ -25,20 +25,10 @@
         android:label="gallery_fragment"
         tools:layout="@layout/gallery_fragment" >
         <action
-            android:id="@+id/edit_poi_action"
-            app:destination="@id/galleryDialogFragment" />
-        <action
             android:id="@+id/photo_detail_action"
             app:destination="@id/viewPhotoFragment" />
     </fragment>
-    <dialog
-        android:id="@+id/galleryDialogFragment"
-        android:name="yf3.map_info.GalleryDialogFragment"
-        android:label="GalleryDialogFragment" >
-        <argument
-            android:name="fileName"
-            app:argType="string" />
-    </dialog>
+
     <activity
         android:id="@+id/cameraActivity"
         android:name="yf3.map_info.ui.CameraActivity"

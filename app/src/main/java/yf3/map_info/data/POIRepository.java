@@ -10,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.internal.EverythingIsNonNull;
 import yf3.map_info.util.POIArgs;
 
 public class POIRepository {
@@ -22,6 +23,7 @@ public class POIRepository {
 
         call.enqueue(new Callback<List<POITypeDataPair>>() {
             @Override
+            @EverythingIsNonNull
             public void onResponse(Call<List<POITypeDataPair>> call, Response<List<POITypeDataPair>> response) {
                 if (200 == response.code()) {
                     typeRequestListener.onSuccess(response.body());
@@ -29,6 +31,7 @@ public class POIRepository {
             }
 
             @Override
+            @EverythingIsNonNull
             public void onFailure(Call<List<POITypeDataPair>> call, Throwable t) {
                 typeRequestListener.onFailure();
             }
@@ -51,6 +54,7 @@ public class POIRepository {
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
+            @EverythingIsNonNull
             public void onResponse(Call call, Response response) {
                 if (response.code() == 400) {
                     try {
@@ -67,6 +71,7 @@ public class POIRepository {
             }
 
             @Override
+            @EverythingIsNonNull
             public void onFailure(Call call, Throwable t) {
                 uploadListener.onFailure();
             }
