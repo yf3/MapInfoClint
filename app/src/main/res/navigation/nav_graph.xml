@@ -61,10 +61,6 @@
             app:destination="@id/POIEditFragment" />
     </fragment>
     <fragment
-        android:id="@+id/pureCompose"
-        android:name="yf3.map_info.PureCompose"
-        android:label="PureCompose" />
-    <fragment
         android:id="@+id/POIEditFragment"
         android:name="yf3.map_info.ui.POIEditFragment"
         android:label="fragment_poi_edit"

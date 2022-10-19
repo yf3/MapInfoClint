@@ -7,15 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.progressindicator.LinearProgressIndicator
-import com.google.android.material.textfield.MaterialAutoCompleteTextView
-import com.google.android.material.textfield.TextInputEditText
 import yf3.map_info.*
 import yf3.map_info.data.POITypeDataPair
 import yf3.map_info.databinding.FragmentPoiEditBinding
@@ -43,7 +37,7 @@ class POIEditFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentPoiEditBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -51,7 +45,7 @@ class POIEditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.uploadProgress.visibility = View.INVISIBLE
 
-        setTypeSelector(binding.typeSelector)
+        loadTypeSelector(binding.typeSelector)
 
         binding.locationText.text = viewModel?.let { String.format("(%.3f, %.3f)", it.longitude, it.latitude) }
 
@@ -99,7 +93,7 @@ class POIEditFragment : Fragment() {
         _binding = null
     }
 
-    private fun setTypeSelector(typeSelector: AutoCompleteTextView?) {
+    private fun loadTypeSelector(typeSelector: AutoCompleteTextView?) {
         viewModel!!.getExistedPOITypes()
         viewModel!!.poiTypes.observe(viewLifecycleOwner) {
             val poiTypesAdapter = ArrayAdapter<POITypeDataPair>(
