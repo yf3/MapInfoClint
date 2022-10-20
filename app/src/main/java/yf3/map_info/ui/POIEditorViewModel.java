@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import yf3.map_info.Configs;
 import yf3.map_info.data.LocationParser;
+import yf3.map_info.data.POITypesRepository;
 import yf3.map_info.util.POIArgs;
 import yf3.map_info.data.POIRepository;
 import yf3.map_info.data.POITypeDataPair;
@@ -18,6 +19,7 @@ import yf3.map_info.util.PhotoModel;
 public class POIEditorViewModel extends ViewModel {
 
     private final POIRepository poiRepository;
+    private final POITypesRepository poiTypesRepository;
     private MutableLiveData<String> uploadStatus;
 
     private MutableLiveData<List<POITypeDataPair>> poiTypes;
@@ -27,6 +29,7 @@ public class POIEditorViewModel extends ViewModel {
 
     public POIEditorViewModel() {
         poiRepository = new POIRepository();
+        poiTypesRepository = new POITypesRepository();
         uploadStatus = new MutableLiveData<>();
         poiTypes = new MutableLiveData<>();
     }
@@ -44,10 +47,10 @@ public class POIEditorViewModel extends ViewModel {
     }
 
     public void getExistedPOITypes() {
-        poiRepository.getTypes(new POIRepository.TypeRequestListener() {
+        poiTypesRepository.getTypes(new POITypesRepository.TypeRequestListener() {
             @Override
-            public void onSuccess(List<POITypeDataPair> poiTypesFromRepo) {
-                poiTypes.setValue(poiTypesFromRepo);
+            public void onSuccess(List<? extends POITypeDataPair> poiTypesFromRepo) { // Kotlin-Java List
+                poiTypes.setValue((List<POITypeDataPair>) poiTypesFromRepo);
             }
 
             @Override

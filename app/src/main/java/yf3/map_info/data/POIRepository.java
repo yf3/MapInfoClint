@@ -15,29 +15,6 @@ import yf3.map_info.util.POIArgs;
 
 public class POIRepository {
 
-    public void getTypes(TypeRequestListener typeRequestListener) {
-        Retrofit retrofit = NetworkClient.getRetrofitClient();
-        GetPOITypes getTypeAPI = retrofit.create(GetPOITypes.class);
-
-        Call<List<POITypeDataPair>> call = getTypeAPI.getAllPOITypes();
-
-        call.enqueue(new Callback<List<POITypeDataPair>>() {
-            @Override
-            @EverythingIsNonNull
-            public void onResponse(Call<List<POITypeDataPair>> call, Response<List<POITypeDataPair>> response) {
-                if (200 == response.code()) {
-                    typeRequestListener.onSuccess(response.body());
-                }
-            }
-
-            @Override
-            @EverythingIsNonNull
-            public void onFailure(Call<List<POITypeDataPair>> call, Throwable t) {
-                typeRequestListener.onFailure();
-            }
-        });
-    }
-
     public void uploadPOI(POIArgs poiArgs, UploadListener uploadListener) {
         Retrofit retrofit = NetworkClient.getRetrofitClient();
         UploadAPIs uploadAPIs = retrofit.create(UploadAPIs.class);
@@ -78,10 +55,7 @@ public class POIRepository {
         });
     }
 
-    public interface TypeRequestListener {
-        void onSuccess(List<POITypeDataPair> poiTypes);
-        void onFailure();
-    }
+
 
     public interface UploadListener {
         void onSuccess();
