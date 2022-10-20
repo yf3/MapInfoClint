@@ -32,7 +32,7 @@ class MapFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val cameraInitOptions = CameraOptions.Builder()
             .center(Point.fromLngLat(mLong, mLat))
-            .zoom(15.0)
+            .zoom(9.0)
             .build()
         binding.mapView.getMapboxMap().setCamera(cameraInitOptions)
         binding.mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS)

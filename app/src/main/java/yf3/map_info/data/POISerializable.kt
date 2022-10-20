@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName
 Temp Solution, needs to integrate with PointOfInterest
  */
 data class POISerializable (
+    @SerializedName("id") val id: Int,
     @SerializedName("name") val title: String,
     @SerializedName("attachment") val photoRelativePath: String,
     @SerializedName("longitude") val longitude: Double,
