@@ -40,7 +40,7 @@ class MapFragment : Fragment() {
             .build()
         binding.mapView.getMapboxMap().setCamera(cameraInitOptions)
         binding.mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS)
-        viewModel!!.testGettingPOIsOldWay()
+        viewModel!!.getMapPOIs()
     }
 
 }
