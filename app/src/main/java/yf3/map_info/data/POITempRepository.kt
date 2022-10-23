@@ -9,7 +9,7 @@ class POITempRepository {
 
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 
-    suspend fun requestGetPOIs():  Response<List<POISerializable>> {
+    suspend fun requestPOIsList():  Response<List<POISerializable>> {
         val retrofit: Retrofit = NetworkClient.getRetrofitClient()
         val apiInterface = retrofit.create(GetMapPOIs::class.java)
         val call = apiInterface.getMapPOIs()

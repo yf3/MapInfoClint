@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import yf3.map_info.data.POISerializable
 import yf3.map_info.data.POITempRepository
 
@@ -16,7 +15,7 @@ class MapViewModel: ViewModel() {
 
     fun getMapPOIs() {
         viewModelScope.launch {
-            val result = poiTempRepository.requestGetPOIs()
+            val result = poiTempRepository.requestPOIsList()
             if (result.isSuccessful) {
                 _poiList.postValue(result.body())
                 for (poi in result.body()!!) {
