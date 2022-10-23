@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.Style
@@ -14,11 +15,14 @@ class MapFragment : Fragment() {
 
     private var _binding:FragmentMapBinding? = null
     private val binding get() = _binding!!
+    private var viewModel: MapViewModel? = null
+
     private var mLong: Double = 121.51797666246986 // Test Purpose
     private var mLat: Double = 25.027184623416378 // Test Purpose
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this)[MapViewModel::class.java]
         arguments?.let {
         }
     }
@@ -36,6 +40,7 @@ class MapFragment : Fragment() {
             .build()
         binding.mapView.getMapboxMap().setCamera(cameraInitOptions)
         binding.mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS)
+        viewModel!!.testGettingPOIsOldWay()
     }
 
 }
