@@ -12,6 +12,7 @@ public interface UploadAPIs {
 
     @Multipart
     @POST("/poi/")
+    // Perhaps PartMap?
     Call<ResponseBody> upload (@Part("name") RequestBody name, // String Request Body
                               @Part MultipartBody.Part attachment,
                               @Part("longitude") Double longitude,

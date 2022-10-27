@@ -16,7 +16,7 @@ import com.mapbox.maps.plugin.annotation.annotations
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
 import yf3.map_info.R
-import yf3.map_info.data.POISerializable
+import yf3.map_info.data.PointOfInterest
 import yf3.map_info.databinding.FragmentMapBinding
 
 class MapFragment : Fragment() {
@@ -54,7 +54,7 @@ class MapFragment : Fragment() {
         }
     }
 
-    private fun addPOIAnnotations(poiList: List<POISerializable>?) {
+    private fun addPOIAnnotations(poiList: List<PointOfInterest>?) {
         var markerBmp: Bitmap = BitmapFactory.decodeResource(resources, R.drawable.red_marker)
         markerBmp.scale(markerBmp.width/2, markerBmp.height/2).also { markerBmp = it }
         val annotationApi = binding.mapView.annotations

@@ -5,11 +5,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.*
 
-class POITempRepository {
+class MapPoiRepository {
 
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 
-    suspend fun requestPOIsList():  Response<List<POISerializable>> {
+    suspend fun requestPOIsList():  Response<List<PointOfInterest>> {
         val retrofit: Retrofit = NetworkClient.getRetrofitClient()
         val apiInterface = retrofit.create(GetMapPOIs::class.java)
         val call = apiInterface.getMapPOIs()
