@@ -12,13 +12,13 @@ import yf3.map_info.Configs;
 import yf3.map_info.data.LocationParser;
 import yf3.map_info.data.POITypesRepository;
 import yf3.map_info.util.POIArgs;
-import yf3.map_info.data.POIRepository;
+import yf3.map_info.data.PoiRepository;
 import yf3.map_info.data.POITypeDataPair;
 import yf3.map_info.util.PhotoModel;
 
 public class POIEditorViewModel extends ViewModel {
 
-    private final POIRepository poiRepository;
+    private final PoiRepository poiRepository;
     private final POITypesRepository poiTypesRepository;
     private MutableLiveData<String> uploadStatus;
 
@@ -28,7 +28,7 @@ public class POIEditorViewModel extends ViewModel {
     private boolean isLocationInit = false;
 
     public POIEditorViewModel() {
-        poiRepository = new POIRepository();
+        poiRepository = new PoiRepository();
         poiTypesRepository = new POITypesRepository();
         uploadStatus = new MutableLiveData<>();
         poiTypes = new MutableLiveData<>();
@@ -65,7 +65,7 @@ public class POIEditorViewModel extends ViewModel {
 
     public void upload(POIArgs poiArgs) {
 //        uploadStatus.setValue("Uploading...");
-        poiRepository.uploadPOI(poiArgs, new POIRepository.UploadListener() {
+        poiRepository.uploadPOI(poiArgs, new PoiRepository.UploadListener() {
             @Override
             public void onSuccess() {
                 uploadStatus.setValue("Done!");

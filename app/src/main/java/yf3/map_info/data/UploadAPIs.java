@@ -12,10 +12,10 @@ public interface UploadAPIs {
 
     @Multipart
     @POST("/poi/")
-    Call<ResponseBody> uploadImage(@Part("name") RequestBody name, // String Request Body
-                                   @Part MultipartBody.Part attachment,
-                                   @Part("longitude") Double longitude,
-                                   @Part("latitude") Double latitude,
-                                   @Part("poi_type") Integer typeID,
-                                   @Part("comment") RequestBody comment); // String Request Body
+    Call<ResponseBody> upload (@Part("name") RequestBody name, // String Request Body
+                              @Part MultipartBody.Part attachment,
+                              @Part("longitude") Double longitude,
+                              @Part("latitude") Double latitude,
+                              @Part("poi_type") Integer typeID,
+                              @Part("comment") RequestBody comment); // String Request Body
 }

@@ -19,13 +19,13 @@ class POIEditFragment : Fragment() {
 
     private var _binding: FragmentPoiEditBinding? = null
     private val binding get() = _binding!!
-    private var viewModel: POIEditorViewModel? = null
+    private var viewModel: PoiEditorViewModel? = null
     private var attachmentPath: String? = null
     private var selectedType: POITypeDataPair? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[POIEditorViewModel::class.java]
+        viewModel = ViewModelProvider(this)[PoiEditorViewModel::class.java]
         arguments?.let {
             this.attachmentPath = POIEditFragmentArgs.fromBundle(it).attachmentPath
         }
@@ -52,7 +52,7 @@ class POIEditFragment : Fragment() {
         binding.locationIcon.setOnClickListener {
             findNavController().navigate(
                 POIEditFragmentDirections.actionPOIEditFragmentToLocationDialogFragment(
-                    viewModel!!.longitude.toFloat(), viewModel!!.latitude.toFloat()
+                    viewModel!!.longitude!!.toFloat(), viewModel!!.latitude!!.toFloat()
                 )
             )
         }
@@ -73,7 +73,7 @@ class POIEditFragment : Fragment() {
             }
 
             val typeID = selectedType?.id ?: Configs.UNSORTED_ID
-            viewModel!!.upload(
+            viewModel!!.makeUploadRequest(
                 POIArgs(
                     binding.titleInput.text.toString(),
                     typeID,

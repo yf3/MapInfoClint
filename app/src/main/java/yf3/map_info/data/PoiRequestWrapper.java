@@ -8,7 +8,7 @@ import okhttp3.RequestBody;
 import yf3.map_info.util.POIArgs;
 import yf3.map_info.util.PhotoModel;
 
-public class PointOfInterest {
+public class PoiRequestWrapper {
     public final RequestBody mTitleStringBody;
     public final int mTypeID;
     public final MultipartBody.Part mImagePart;
@@ -19,7 +19,7 @@ public class PointOfInterest {
     private static final String MEDIA_PARSE_TYPE = "image/*";
     private static final String MEDIA_FIELD_NAME = "attachment";
 
-    public PointOfInterest(POIArgs poiArgs) {
+    public PoiRequestWrapper(POIArgs poiArgs) {
         mTitleStringBody = getStringBody(poiArgs.title);
         mTypeID = poiArgs.typeID;
         mImagePart = getMediaPart(poiArgs.filePath);

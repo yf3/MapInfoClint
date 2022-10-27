@@ -3,7 +3,6 @@ package yf3.map_info.data;
 import android.util.Log;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -13,15 +12,15 @@ import retrofit2.Retrofit;
 import retrofit2.internal.EverythingIsNonNull;
 import yf3.map_info.util.POIArgs;
 
-public class POIRepository {
+public class PoiRepository {
 
     public void uploadPOI(POIArgs poiArgs, UploadListener uploadListener) {
         Retrofit retrofit = NetworkClient.getRetrofitClient();
         UploadAPIs uploadAPIs = retrofit.create(UploadAPIs.class);
 
-        PointOfInterest poi = new PointOfInterest(poiArgs);
+        PoiRequestWrapper poi = new PoiRequestWrapper(poiArgs);
 
-        Call<ResponseBody> call = uploadAPIs.uploadImage(
+        Call<ResponseBody> call = uploadAPIs.upload(
                 poi.mTitleStringBody,
                 poi.mImagePart,
                 poi.mLongitude,
