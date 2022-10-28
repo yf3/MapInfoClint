@@ -15,8 +15,8 @@ class POITypesRepository {
 
     suspend fun getPoiTypes(): Response<List<POITypeDataPair>> {
         val retrofit = NetworkClient.getRetrofitClient()
-        val getTypeAPI = retrofit.create(GetPOITypes::class.java)
-        val call = getTypeAPI.allPOITypes
+        val getTypeAPI = retrofit.create(PoiService::class.java)
+        val call = getTypeAPI.getMapPoiTypes()
         return withContext(dispatcher) {
             call.awaitResponse()
         }

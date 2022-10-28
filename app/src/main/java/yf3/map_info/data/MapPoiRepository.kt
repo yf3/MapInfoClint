@@ -11,7 +11,7 @@ class MapPoiRepository {
 
     suspend fun requestPOIsList():  Response<List<PointOfInterest>> {
         val retrofit: Retrofit = NetworkClient.getRetrofitClient()
-        val apiInterface = retrofit.create(GetMapPOIs::class.java)
+        val apiInterface = retrofit.create(PoiService::class.java)
         val call = apiInterface.getMapPOIs()
         return withContext(dispatcher) {
             call.awaitResponse()

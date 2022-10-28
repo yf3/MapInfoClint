@@ -14,7 +14,7 @@ class PoiRequestRepository {
 
     suspend fun uploadPoi(poiFormWrapper: POIArgs): Response<ResponseBody> {
         val retrofit = NetworkClient.getRetrofitClient()
-        val uploadAPIs = retrofit.create(UploadAPIs::class.java)
+        val uploadAPIs = retrofit.create(PoiService::class.java)
 
         val requestWrapper = PoiRequestWrapper(poiFormWrapper)
 
