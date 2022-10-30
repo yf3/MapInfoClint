@@ -18,7 +18,6 @@ interface PoiService {
 
     @Multipart
     @POST("/poi/")
-    // Perhaps PartMap?
     fun upload(@Part("name") name: RequestBody,
                @Part attachment: MultipartBody.Part,
                @Part("longitude") longitude: Double,

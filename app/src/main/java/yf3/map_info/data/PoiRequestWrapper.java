@@ -36,7 +36,8 @@ public class PoiRequestWrapper {
 
     private MultipartBody.Part getMediaPart(String filePath) {
         File file = new File(filePath);
-        RequestBody fileReqBody = RequestBody.create(file, MediaType.parse(MEDIA_PARSE_TYPE)); // as argument
+        RequestBody fileReqBody = RequestBody.create(file, MediaType.parse(MEDIA_PARSE_TYPE));
         return MultipartBody.Part.createFormData(MEDIA_FIELD_NAME, file.getName(), fileReqBody);
     }
+
 }
