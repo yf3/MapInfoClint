@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import yf3.map_info.data.PointOfInterest
 import yf3.map_info.data.MapPoiRepository
+import yf3.map_info.data.RemoteApiResult
 
 class MapViewModel: ViewModel() {
     private var mapPoiRepository = MapPoiRepository()
@@ -16,9 +17,10 @@ class MapViewModel: ViewModel() {
     fun getMapPOIs() {
         viewModelScope.launch {
             val result = mapPoiRepository.requestPOIsList()
-            if (result.isSuccessful) {
-                _poiList.postValue(result.body())
-                for (poi in result.body()!!) {
+            if (result is RemoteApiResult.Success) {
+                val receivedList = result.data.body()
+                _poiList.postValue(receivedList)
+                for (poi in receivedList!!) {
                     Log.i("POI", poi.photoRelativePath)
                 }
             }

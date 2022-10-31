@@ -54,10 +54,9 @@ class PoiEditorViewModel: ViewModel() {
 
     fun makeUploadRequest(poiArgs: POIArgs) {
         viewModelScope.launch {
-            val response = requestRepository.uploadPoi(poiArgs)
-            when (response.code()) {
-                201 -> uploadStatus.postValue("New POI created.")
-                400 -> uploadStatus.postValue("Bad Request.")
+            when (requestRepository.uploadPoi(poiArgs)) {
+                is RemoteApiResult.Success -> uploadStatus.postValue("New POI created.")
+                is RemoteApiResult.Bad -> uploadStatus.postValue("Bad Request.")
                 else -> {
                     uploadStatus.postValue("Connection Error.")
                 }
