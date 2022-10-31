@@ -9,6 +9,7 @@ import yf3.map_info.Configs
 import yf3.map_info.data.POITypeDataPair
 import yf3.map_info.data.POITypesRepository
 import yf3.map_info.data.PoiRequestRepository
+import yf3.map_info.data.RemoteApiResult
 import yf3.map_info.util.POIArgs
 import yf3.map_info.util.PhotoModel
 
@@ -39,8 +40,8 @@ class PoiEditorViewModel: ViewModel() {
     fun getExistedPOITypes() {
         viewModelScope.launch {
             val result = poiTypesRepository.getPoiTypes()
-            if (result.isSuccessful) {
-                _poiTypes.postValue(result.body())
+            if (result is RemoteApiResult.Success) {
+                _poiTypes.postValue(result.data.body())
             }
             else {
                 Log.e("POI VM", "failed getting POI types")
