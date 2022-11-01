@@ -6,16 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import yf3.map_info.Configs
-import yf3.map_info.data.POITypeDataPair
-import yf3.map_info.data.POITypesRepository
-import yf3.map_info.data.PoiRequestRepository
-import yf3.map_info.data.RemoteApiResult
+import yf3.map_info.data.*
 import yf3.map_info.util.POIArgs
 import yf3.map_info.util.PhotoModel
 
 class PoiEditorViewModel: ViewModel() {
-    private val requestRepository: PoiRequestRepository = PoiRequestRepository()
-    private val poiTypesRepository: POITypesRepository = POITypesRepository()
+    private var mapPoiRepository = MapPoiRepository()
     private var _uploadStatus: MutableLiveData<String> = MutableLiveData<String>()
     val uploadStatus get() = _uploadStatus
 
@@ -39,7 +35,7 @@ class PoiEditorViewModel: ViewModel() {
 
     fun getExistedPOITypes() {
         viewModelScope.launch {
-            val result = poiTypesRepository.getPoiTypes()
+            val result = mapPoiRepository.getPoiTypes()
             if (result is RemoteApiResult.Success) {
                 _poiTypes.postValue(result.data.body())
             }
@@ -54,12 +50,10 @@ class PoiEditorViewModel: ViewModel() {
 
     fun makeUploadRequest(poiArgs: POIArgs) {
         viewModelScope.launch {
-            when (requestRepository.uploadPoi(poiArgs)) {
+            when (mapPoiRepository.uploadPoi(poiArgs)) {
                 is RemoteApiResult.Success -> uploadStatus.postValue("New POI created.")
                 is RemoteApiResult.Bad -> uploadStatus.postValue("Bad Request.")
-                else -> {
-                    uploadStatus.postValue("Connection Error.")
-                }
+                is RemoteApiResult.Error -> uploadStatus.postValue("Connection Error.")
             }
         }
     }

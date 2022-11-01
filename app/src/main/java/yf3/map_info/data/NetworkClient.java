@@ -9,7 +9,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import yf3.map_info.Configs;
 
-public class NetworkClient {
+public final class NetworkClient {
+
+    private NetworkClient() {}
 
     private static final String BASE_URL = "http://" + Configs.LOCAL_ADDRESS + ":" + Configs.LOCAL_PORT;
     private static Retrofit retrofit;
