@@ -88,11 +88,6 @@ class POIEditFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     private fun loadTypeSelector(typeSelector: AutoCompleteTextView?) {
         viewModel!!.getExistedPOITypes()
         viewModel!!.poiTypes.observe(viewLifecycleOwner) {
@@ -106,5 +101,10 @@ class POIEditFragment : Fragment() {
         typeSelector?.setOnItemClickListener { adapterView, _, i, _ ->
             selectedType = adapterView.adapter.getItem(i) as POITypeDataPair?
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
