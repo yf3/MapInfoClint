@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import yf3.map_info.Configs
 import yf3.map_info.data.*
 import yf3.map_info.util.POIArgs
-import yf3.map_info.util.PhotoModel
+import yf3.map_info.util.PhotoExif
 
 class PoiEditorViewModel: ViewModel() {
     private var mapPoiRepository = MapPoiRepository()
@@ -26,7 +26,7 @@ class PoiEditorViewModel: ViewModel() {
 
     fun initPhotoLocation(path: String?) {
         if (!isLocationInit) {
-            val longLatPair = PhotoModel.getLocationPair(path)
+            val longLatPair = PhotoExif.getLocationPair(path)
             longitude = longLatPair.longitude
             latitude = longLatPair.latitude
             isLocationInit = true

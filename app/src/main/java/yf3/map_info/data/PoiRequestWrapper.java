@@ -5,8 +5,9 @@ import java.io.File;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import yf3.map_info.util.LocationParser;
 import yf3.map_info.util.POIArgs;
-import yf3.map_info.util.PhotoModel;
+import yf3.map_info.util.PhotoExif;
 
 public class PoiRequestWrapper {
     public final RequestBody mTitleStringBody;
@@ -23,7 +24,7 @@ public class PoiRequestWrapper {
         mTitleStringBody = getStringBody(poiArgs.title);
         mTypeID = poiArgs.typeID;
         mImagePart = getMediaPart(poiArgs.filePath);
-        LocationParser.LongLatPair longLatPair = PhotoModel.getLocationPair(poiArgs.filePath);
+        LocationParser.LongLatPair longLatPair = PhotoExif.getLocationPair(poiArgs.filePath);
         mLongitude = longLatPair.longitude;
         mLatitude = longLatPair.latitude;
         mCommentStringBody = getStringBody(poiArgs.comment);

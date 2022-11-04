@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import yf3.map_info.util.PhotoModel;
+import yf3.map_info.util.PhotoExif;
 import yf3.map_info.databinding.GalleryFragmentBinding;
 
 import android.view.LayoutInflater;
@@ -45,7 +45,7 @@ public class GalleryFragment extends Fragment {
         File[] internalStorageDirFiles = requireContext().getFilesDir().listFiles();
         ArrayList<String> listOfAllImages = new ArrayList<>();
         for (File file: internalStorageDirFiles) {
-            if (file.getName().endsWith(PhotoModel.PHOTO_EXT)) {
+            if (file.getName().endsWith(PhotoExif.PHOTO_EXT)) {
                 listOfAllImages.add(file.getAbsolutePath());
             }
         }

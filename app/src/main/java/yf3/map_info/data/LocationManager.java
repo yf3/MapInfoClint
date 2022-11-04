@@ -3,13 +3,9 @@ package yf3.map_info.data;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.Location;
-import android.os.Looper;
 import android.util.Log;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
 import com.google.android.gms.tasks.CancellationToken;
@@ -21,7 +17,6 @@ public class LocationManager {
     private static LocationManager instance;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private Location currentLocation;
-    private LocationCallback locationCallback;
     private LocationListener instantLocationListener;
 
     private LocationManager(Context appContext) {
@@ -47,7 +42,8 @@ public class LocationManager {
     public void findCurrentLocation() {
         CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
         CancellationToken cancellationToken = cancellationTokenSource.getToken();
-        fusedLocationProviderClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, cancellationToken).addOnSuccessListener(
+        fusedLocationProviderClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, cancellationToken)
+                .addOnSuccessListener(
                 location -> {
                     if (location != null) {
                         currentLocation = location;
@@ -62,23 +58,6 @@ public class LocationManager {
                 location -> {
                     cancellationTokenSource.cancel();
                 });
-    }
-
-    @SuppressLint("MissingPermission")
-    public void updateAndNotify() {
-        LocationRequest locationRequest = LocationRequest.create()
-                .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
-                .setFastestInterval(0)
-                .setNumUpdates(1);
-
-        locationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                currentLocation = locationResult.getLastLocation();
-                Log.i("LocationCallback", String.format("%f, %f", currentLocation.getLongitude(), currentLocation.getLatitude()));
-            }
-        };
-        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
     }
 
     public Location getCurrentLocation() {

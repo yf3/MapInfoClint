@@ -8,3 +8,4 @@
 .externalNativeBuild
 **/developer-config.xml
 **/Configs.java
+**/credentials.json

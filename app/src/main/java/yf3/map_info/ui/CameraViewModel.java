@@ -16,13 +16,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import yf3.map_info.data.LocationListener;
 import yf3.map_info.data.LocationManager;
-import yf3.map_info.util.PhotoModel;
+import yf3.map_info.util.PhotoExif;
 
 public class CameraViewModel extends AndroidViewModel implements LocationListener {
     private LocationManager locationRepository = null;
     private MutableLiveData<Location> instantLocation;
     private boolean hasLocationPermissions = false;
-    private PhotoModel photoModel;
+    private PhotoExif photoExif;
 
     public CameraViewModel(@NonNull Application application) {
         super(application);
@@ -38,10 +38,10 @@ public class CameraViewModel extends AndroidViewModel implements LocationListene
     }
 
     public void setPhotoToAddLocation(File file) {
-        if (null == photoModel) {
-            photoModel = new PhotoModel(file);
+        if (null == photoExif) {
+            photoExif = new PhotoExif(file);
         }
-        photoModel.setFile(file);
+        photoExif.setFile(file);
     }
 
     public void takePhoto(ImageCapture imageCapture) {
@@ -70,7 +70,7 @@ public class CameraViewModel extends AndroidViewModel implements LocationListene
         File mediaStorageDir = getApplication().getFilesDir();
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         File mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-                "IMG_"+ timeStamp + PhotoModel.PHOTO_EXT);
+                "IMG_"+ timeStamp + PhotoExif.PHOTO_EXT);
         return mediaFile;
     }
 
@@ -81,8 +81,8 @@ public class CameraViewModel extends AndroidViewModel implements LocationListene
     @Override
     public void onLocationFound() {
         instantLocation.setValue(locationRepository.getCurrentLocation());
-        if (null != photoModel) {
-            photoModel.writeLocationExif(instantLocation.getValue());
+        if (null != photoExif) {
+            photoExif.writeLocationExif(instantLocation.getValue());
         }
     }
 

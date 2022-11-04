@@ -8,13 +8,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import yf3.map_info.data.LocationParser;
-
-public class PhotoModel {
+public class PhotoExif {
     public static final String PHOTO_EXT = ".jpeg";
     private File mFile;
 
-    public PhotoModel(File file) {
+    public PhotoExif(File file) {
         mFile = file;
     }
 

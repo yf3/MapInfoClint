@@ -1,4 +1,4 @@
-package yf3.map_info.data;
+package yf3.map_info.util;
 
 import java.util.Scanner;
 
