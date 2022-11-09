@@ -1,4 +1,4 @@
-package yf3.map_info.data.room
+package yf3.map_info.data.db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -11,5 +11,6 @@ data class LocalPoi (
     val longitude: Double,
     val latitude: Double,
     val description: String,
-    val poiType: Int
+    val poiType: Int,
+    val mapID: Int
 )

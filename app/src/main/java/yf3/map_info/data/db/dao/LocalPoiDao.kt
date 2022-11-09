@@ -1,4 +1,4 @@
-package yf3.map_info.data.room
+package yf3.map_info.data.db.dao
 
 import androidx.room.Dao
 
